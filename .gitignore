@@ -8,3 +8,6 @@
 *.mp4
 *.mov
 *.MOV
+
+# 排除输出文件夹
+output/
