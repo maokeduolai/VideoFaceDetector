@@ -1,0 +1,2655 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/ -->
+<html lang="zh" class="js-focus-visible js" data-js-focus-visible=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link id="giscus-css" rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/default.css">
+    
+      
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arisa 的个人博客">
+      
+      
+        <meta name="author" content="Akiba Arisa">
+      
+      
+        <link rel="canonical" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/">
+      
+      
+        <link rel="prev" href="https://blog.arisa.moe/blog/2022/220428-how-to-ask-questions-like-a-retard/">
+      
+      
+        <link rel="next" href="https://blog.arisa.moe/blog/2022/220502-how-dogs-work-in-epic7/">
+      
+      <link rel="icon" href="https://blog.arisa.moe/assets/favicon.webp">
+      <meta name="generator" content="mkdocs-1.4.3, mkdocs-material-9.1.18">
+    
+    
+      
+        <title>基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa | Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/main.26e3688c.min.css">
+      
+        
+        <link rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/palette.ecc896b0.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+        <link rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/css">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script><script>(function(){class RuffleMimeType{constructor(a,b,c){this.type=a,this.description=b,this.suffixes=c}}class RuffleMimeTypeArray{constructor(a){this.__mimetypes=[],this.__named_mimetypes={};for(let b of a)this.install(b)}install(a){let b=this.__mimetypes.length;this.__mimetypes.push(a),this.__named_mimetypes[a.type]=a,this[a.type]=a,this[b]=a}item(a){return this.__mimetypes[a]}namedItem(a){return this.__named_mimetypes[a]}get length(){return this.__mimetypes.length}}class RufflePlugin extends RuffleMimeTypeArray{constructor(a,b,c,d){super(d),this.name=a,this.description=b,this.filename=c}install(a){a.enabledPlugin||(a.enabledPlugin=this),super.install(a)}}class RufflePluginArray{constructor(a){this.__plugins=[],this.__named_plugins={};for(let b of a)this.install(b)}install(a){let b=this.__plugins.length;this.__plugins.push(a),this.__named_plugins[a.name]=a,this[a.name]=a,this[b]=a}item(a){return this.__plugins[a]}namedItem(a){return this.__named_plugins[a]}get length(){return this.__plugins.length}}const FLASH_PLUGIN=new RufflePlugin("Shockwave Flash","Shockwave Flash 32.0 r0","ruffle.js",[new RuffleMimeType("application/futuresplash","Shockwave Flash","spl"),new RuffleMimeType("application/x-shockwave-flash","Shockwave Flash","swf"),new RuffleMimeType("application/x-shockwave-flash2-preview","Shockwave Flash","swf"),new RuffleMimeType("application/vnd.adobe.flash-movie","Shockwave Flash","swf")]);function install_plugin(a){navigator.plugins.install||Object.defineProperty(navigator,"plugins",{value:new RufflePluginArray(navigator.plugins),writable:!1}),navigator.plugins.install(a),0<a.length&&!navigator.mimeTypes.install&&Object.defineProperty(navigator,"mimeTypes",{value:new RuffleMimeTypeArray(navigator.mimeTypes),writable:!1});for(var b=0;b<a.length;b+=1)navigator.mimeTypes.install(a[b])}install_plugin(FLASH_PLUGIN);})();</script><script src="chrome-extension://gcmgaphlohnhdgfbefpphkhnaijglnci/dist/ruffle.js?id=79709096768"></script>
+    
+      
+
+    
+    
+    
+   <link href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/glightbox.min.css" rel="stylesheet"><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/glightbox.min.js.下载"></script><style>.swal2-popup.swal2-toast{flex-direction:row;align-items:center;width:auto;padding:.625em;overflow-y:hidden;background:#fff;box-shadow:0 0 .625em #d9d9d9}.swal2-popup.swal2-toast .swal2-header{flex-direction:row;padding:0}.swal2-popup.swal2-toast .swal2-title{flex-grow:1;justify-content:flex-start;margin:0 .6em;font-size:1em}.swal2-popup.swal2-toast .swal2-footer{margin:.5em 0 0;padding:.5em 0 0;font-size:.8em}.swal2-popup.swal2-toast .swal2-close{position:static;width:.8em;height:.8em;line-height:.8}.swal2-popup.swal2-toast .swal2-content{justify-content:flex-start;padding:0;font-size:1em}.swal2-popup.swal2-toast .swal2-icon{width:2em;min-width:2em;height:2em;margin:0}.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:1.8em;font-weight:700}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-popup.swal2-toast .swal2-icon .swal2-icon-content{font-size:.25em}}.swal2-popup.swal2-toast .swal2-icon.swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line]{top:.875em;width:1.375em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:.3125em}.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:.3125em}.swal2-popup.swal2-toast .swal2-actions{flex-basis:auto!important;width:auto;height:auto;margin:0 .3125em;padding:0}.swal2-popup.swal2-toast .swal2-styled{margin:.125em .3125em;padding:.3125em .625em;font-size:1em}.swal2-popup.swal2-toast .swal2-styled:focus{box-shadow:0 0 0 1px #fff,0 0 0 3px rgba(100,150,200,.5)}.swal2-popup.swal2-toast .swal2-success{border-color:#a5dc86}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line]{position:absolute;width:1.6em;height:3em;transform:rotate(45deg);border-radius:50%}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.8em;left:-.5em;transform:rotate(-45deg);transform-origin:2em 2em;border-radius:4em 0 0 4em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.25em;left:.9375em;transform-origin:0 1.5em;border-radius:0 4em 4em 0}.swal2-popup.swal2-toast .swal2-success .swal2-success-ring{width:2em;height:2em}.swal2-popup.swal2-toast .swal2-success .swal2-success-fix{top:0;left:.4375em;width:.4375em;height:2.6875em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line]{height:.3125em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=tip]{top:1.125em;left:.1875em;width:.75em}.swal2-popup.swal2-toast .swal2-success [class^=swal2-success-line][class$=long]{top:.9375em;right:.1875em;width:1.375em}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-toast-animate-success-line-tip .75s;animation:swal2-toast-animate-success-line-tip .75s}.swal2-popup.swal2-toast .swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-toast-animate-success-line-long .75s;animation:swal2-toast-animate-success-line-long .75s}.swal2-popup.swal2-toast.swal2-show{-webkit-animation:swal2-toast-show .5s;animation:swal2-toast-show .5s}.swal2-popup.swal2-toast.swal2-hide{-webkit-animation:swal2-toast-hide .1s forwards;animation:swal2-toast-hide .1s forwards}.swal2-container{display:flex;position:fixed;z-index:1060;top:0;right:0;bottom:0;left:0;flex-direction:row;align-items:center;justify-content:center;padding:.625em;overflow-x:hidden;transition:background-color .1s;-webkit-overflow-scrolling:touch}.swal2-container.swal2-backdrop-show,.swal2-container.swal2-noanimation{background:rgba(0,0,0,.4)}.swal2-container.swal2-backdrop-hide{background:0 0!important}.swal2-container.swal2-top{align-items:flex-start}.swal2-container.swal2-top-left,.swal2-container.swal2-top-start{align-items:flex-start;justify-content:flex-start}.swal2-container.swal2-top-end,.swal2-container.swal2-top-right{align-items:flex-start;justify-content:flex-end}.swal2-container.swal2-center{align-items:center}.swal2-container.swal2-center-left,.swal2-container.swal2-center-start{align-items:center;justify-content:flex-start}.swal2-container.swal2-center-end,.swal2-container.swal2-center-right{align-items:center;justify-content:flex-end}.swal2-container.swal2-bottom{align-items:flex-end}.swal2-container.swal2-bottom-left,.swal2-container.swal2-bottom-start{align-items:flex-end;justify-content:flex-start}.swal2-container.swal2-bottom-end,.swal2-container.swal2-bottom-right{align-items:flex-end;justify-content:flex-end}.swal2-container.swal2-bottom-end>:first-child,.swal2-container.swal2-bottom-left>:first-child,.swal2-container.swal2-bottom-right>:first-child,.swal2-container.swal2-bottom-start>:first-child,.swal2-container.swal2-bottom>:first-child{margin-top:auto}.swal2-container.swal2-grow-fullscreen>.swal2-modal{display:flex!important;flex:1;align-self:stretch;justify-content:center}.swal2-container.swal2-grow-row>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container.swal2-grow-column{flex:1;flex-direction:column}.swal2-container.swal2-grow-column.swal2-bottom,.swal2-container.swal2-grow-column.swal2-center,.swal2-container.swal2-grow-column.swal2-top{align-items:center}.swal2-container.swal2-grow-column.swal2-bottom-left,.swal2-container.swal2-grow-column.swal2-bottom-start,.swal2-container.swal2-grow-column.swal2-center-left,.swal2-container.swal2-grow-column.swal2-center-start,.swal2-container.swal2-grow-column.swal2-top-left,.swal2-container.swal2-grow-column.swal2-top-start{align-items:flex-start}.swal2-container.swal2-grow-column.swal2-bottom-end,.swal2-container.swal2-grow-column.swal2-bottom-right,.swal2-container.swal2-grow-column.swal2-center-end,.swal2-container.swal2-grow-column.swal2-center-right,.swal2-container.swal2-grow-column.swal2-top-end,.swal2-container.swal2-grow-column.swal2-top-right{align-items:flex-end}.swal2-container.swal2-grow-column>.swal2-modal{display:flex!important;flex:1;align-content:center;justify-content:center}.swal2-container.swal2-no-transition{transition:none!important}.swal2-container:not(.swal2-top):not(.swal2-top-start):not(.swal2-top-end):not(.swal2-top-left):not(.swal2-top-right):not(.swal2-center-start):not(.swal2-center-end):not(.swal2-center-left):not(.swal2-center-right):not(.swal2-bottom):not(.swal2-bottom-start):not(.swal2-bottom-end):not(.swal2-bottom-left):not(.swal2-bottom-right):not(.swal2-grow-fullscreen)>.swal2-modal{margin:auto}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-container .swal2-modal{margin:0!important}}.swal2-popup{display:none;position:relative;box-sizing:border-box;flex-direction:column;justify-content:center;width:32em;max-width:100%;padding:1.25em;border:none;border-radius:5px;background:#fff;font-family:inherit;font-size:1rem}.swal2-popup:focus{outline:0}.swal2-popup.swal2-loading{overflow-y:hidden}.swal2-header{display:flex;flex-direction:column;align-items:center;padding:0 1.8em}.swal2-title{position:relative;max-width:100%;margin:0 0 .4em;padding:0;color:#595959;font-size:1.875em;font-weight:600;text-align:center;text-transform:none;word-wrap:break-word}.swal2-actions{display:flex;z-index:1;box-sizing:border-box;flex-wrap:wrap;align-items:center;justify-content:center;width:100%;margin:1.25em auto 0;padding:0 1.6em}.swal2-actions:not(.swal2-loading) .swal2-styled[disabled]{opacity:.4}.swal2-actions:not(.swal2-loading) .swal2-styled:hover{background-image:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.1))}.swal2-actions:not(.swal2-loading) .swal2-styled:active{background-image:linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2))}.swal2-loader{display:none;align-items:center;justify-content:center;width:2.2em;height:2.2em;margin:0 1.875em;-webkit-animation:swal2-rotate-loading 1.5s linear 0s infinite normal;animation:swal2-rotate-loading 1.5s linear 0s infinite normal;border-width:.25em;border-style:solid;border-radius:100%;border-color:#2778c4 transparent #2778c4 transparent}.swal2-styled{margin:.3125em;padding:.625em 1.1em;box-shadow:none;font-weight:500}.swal2-styled:not([disabled]){cursor:pointer}.swal2-styled.swal2-confirm{border:0;border-radius:.25em;background:initial;background-color:#2778c4;color:#fff;font-size:1.0625em}.swal2-styled.swal2-deny{border:0;border-radius:.25em;background:initial;background-color:#d14529;color:#fff;font-size:1.0625em}.swal2-styled.swal2-cancel{border:0;border-radius:.25em;background:initial;background-color:#757575;color:#fff;font-size:1.0625em}.swal2-styled:focus{outline:0;box-shadow:0 0 0 3px rgba(100,150,200,.5)}.swal2-styled::-moz-focus-inner{border:0}.swal2-footer{justify-content:center;margin:1.25em 0 0;padding:1em 0 0;border-top:1px solid #eee;color:#545454;font-size:1em}.swal2-timer-progress-bar-container{position:absolute;right:0;bottom:0;left:0;height:.25em;overflow:hidden;border-bottom-right-radius:5px;border-bottom-left-radius:5px}.swal2-timer-progress-bar{width:100%;height:.25em;background:rgba(0,0,0,.2)}.swal2-image{max-width:100%;margin:1.25em auto}.swal2-close{position:absolute;z-index:2;top:0;right:0;align-items:center;justify-content:center;width:1.2em;height:1.2em;padding:0;overflow:hidden;transition:color .1s ease-out;border:none;border-radius:5px;background:0 0;color:#ccc;font-family:serif;font-size:2.5em;line-height:1.2;cursor:pointer}.swal2-close:hover{transform:none;background:0 0;color:#f27474}.swal2-close:focus{outline:0;box-shadow:inset 0 0 0 3px rgba(100,150,200,.5)}.swal2-close::-moz-focus-inner{border:0}.swal2-content{z-index:1;justify-content:center;margin:0;padding:0 1.6em;color:#545454;font-size:1.125em;font-weight:400;line-height:normal;text-align:center;word-wrap:break-word}.swal2-checkbox,.swal2-file,.swal2-input,.swal2-radio,.swal2-select,.swal2-textarea{margin:1em auto}.swal2-file,.swal2-input,.swal2-textarea{box-sizing:border-box;width:100%;transition:border-color .3s,box-shadow .3s;border:1px solid #d9d9d9;border-radius:.1875em;background:inherit;box-shadow:inset 0 1px 1px rgba(0,0,0,.06);color:inherit;font-size:1.125em}.swal2-file.swal2-inputerror,.swal2-input.swal2-inputerror,.swal2-textarea.swal2-inputerror{border-color:#f27474!important;box-shadow:0 0 2px #f27474!important}.swal2-file:focus,.swal2-input:focus,.swal2-textarea:focus{border:1px solid #b4dbed;outline:0;box-shadow:0 0 0 3px rgba(100,150,200,.5)}.swal2-file::-moz-placeholder,.swal2-input::-moz-placeholder,.swal2-textarea::-moz-placeholder{color:#ccc}.swal2-file:-ms-input-placeholder,.swal2-input:-ms-input-placeholder,.swal2-textarea:-ms-input-placeholder{color:#ccc}.swal2-file::placeholder,.swal2-input::placeholder,.swal2-textarea::placeholder{color:#ccc}.swal2-range{margin:1em auto;background:#fff}.swal2-range input{width:80%}.swal2-range output{width:20%;color:inherit;font-weight:600;text-align:center}.swal2-range input,.swal2-range output{height:2.625em;padding:0;font-size:1.125em;line-height:2.625em}.swal2-input{height:2.625em;padding:0 .75em}.swal2-input[type=number]{max-width:10em}.swal2-file{background:inherit;font-size:1.125em}.swal2-textarea{height:6.75em;padding:.75em}.swal2-select{min-width:50%;max-width:100%;padding:.375em .625em;background:inherit;color:inherit;font-size:1.125em}.swal2-checkbox,.swal2-radio{align-items:center;justify-content:center;background:#fff;color:inherit}.swal2-checkbox label,.swal2-radio label{margin:0 .6em;font-size:1.125em}.swal2-checkbox input,.swal2-radio input{margin:0 .4em}.swal2-input-label{display:flex;justify-content:center;margin:1em auto}.swal2-validation-message{display:none;align-items:center;justify-content:center;margin:0 -2.7em;padding:.625em;overflow:hidden;background:#f0f0f0;color:#666;font-size:1em;font-weight:300}.swal2-validation-message::before{content:"!";display:inline-block;width:1.5em;min-width:1.5em;height:1.5em;margin:0 .625em;border-radius:50%;background-color:#f27474;color:#fff;font-weight:600;line-height:1.5em;text-align:center}.swal2-icon{position:relative;box-sizing:content-box;justify-content:center;width:5em;height:5em;margin:1.25em auto 1.875em;border:.25em solid transparent;border-radius:50%;border-color:#000;font-family:inherit;line-height:5em;cursor:default;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.swal2-icon .swal2-icon-content{display:flex;align-items:center;font-size:3.75em}.swal2-icon.swal2-error{border-color:#f27474;color:#f27474}.swal2-icon.swal2-error .swal2-x-mark{position:relative;flex-grow:1}.swal2-icon.swal2-error [class^=swal2-x-mark-line]{display:block;position:absolute;top:2.3125em;width:2.9375em;height:.3125em;border-radius:.125em;background-color:#f27474}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left]{left:1.0625em;transform:rotate(45deg)}.swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right]{right:1em;transform:rotate(-45deg)}.swal2-icon.swal2-error.swal2-icon-show{-webkit-animation:swal2-animate-error-icon .5s;animation:swal2-animate-error-icon .5s}.swal2-icon.swal2-error.swal2-icon-show .swal2-x-mark{-webkit-animation:swal2-animate-error-x-mark .5s;animation:swal2-animate-error-x-mark .5s}.swal2-icon.swal2-warning{border-color:#facea8;color:#f8bb86}.swal2-icon.swal2-info{border-color:#9de0f6;color:#3fc3ee}.swal2-icon.swal2-question{border-color:#c9dae1;color:#87adbd}.swal2-icon.swal2-success{border-color:#a5dc86;color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-circular-line]{position:absolute;width:3.75em;height:7.5em;transform:rotate(45deg);border-radius:50%}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=left]{top:-.4375em;left:-2.0635em;transform:rotate(-45deg);transform-origin:3.75em 3.75em;border-radius:7.5em 0 0 7.5em}.swal2-icon.swal2-success [class^=swal2-success-circular-line][class$=right]{top:-.6875em;left:1.875em;transform:rotate(-45deg);transform-origin:0 3.75em;border-radius:0 7.5em 7.5em 0}.swal2-icon.swal2-success .swal2-success-ring{position:absolute;z-index:2;top:-.25em;left:-.25em;box-sizing:content-box;width:100%;height:100%;border:.25em solid rgba(165,220,134,.3);border-radius:50%}.swal2-icon.swal2-success .swal2-success-fix{position:absolute;z-index:1;top:.5em;left:1.625em;width:.4375em;height:5.625em;transform:rotate(-45deg)}.swal2-icon.swal2-success [class^=swal2-success-line]{display:block;position:absolute;z-index:2;height:.3125em;border-radius:.125em;background-color:#a5dc86}.swal2-icon.swal2-success [class^=swal2-success-line][class$=tip]{top:2.875em;left:.8125em;width:1.5625em;transform:rotate(45deg)}.swal2-icon.swal2-success [class^=swal2-success-line][class$=long]{top:2.375em;right:.5em;width:2.9375em;transform:rotate(-45deg)}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-tip{-webkit-animation:swal2-animate-success-line-tip .75s;animation:swal2-animate-success-line-tip .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-line-long{-webkit-animation:swal2-animate-success-line-long .75s;animation:swal2-animate-success-line-long .75s}.swal2-icon.swal2-success.swal2-icon-show .swal2-success-circular-line-right{-webkit-animation:swal2-rotate-success-circular-line 4.25s ease-in;animation:swal2-rotate-success-circular-line 4.25s ease-in}.swal2-progress-steps{flex-wrap:wrap;align-items:center;max-width:100%;margin:0 0 1.25em;padding:0;background:inherit;font-weight:600}.swal2-progress-steps li{display:inline-block;position:relative}.swal2-progress-steps .swal2-progress-step{z-index:20;flex-shrink:0;width:2em;height:2em;border-radius:2em;background:#2778c4;color:#fff;line-height:2em;text-align:center}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step{background:#2778c4}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step{background:#add8e6;color:#fff}.swal2-progress-steps .swal2-progress-step.swal2-active-progress-step~.swal2-progress-step-line{background:#add8e6}.swal2-progress-steps .swal2-progress-step-line{z-index:10;flex-shrink:0;width:2.5em;height:.4em;margin:0 -1px;background:#2778c4}[class^=swal2]{-webkit-tap-highlight-color:transparent}.swal2-show{-webkit-animation:swal2-show .3s;animation:swal2-show .3s}.swal2-hide{-webkit-animation:swal2-hide .15s forwards;animation:swal2-hide .15s forwards}.swal2-noanimation{transition:none}.swal2-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}.swal2-rtl .swal2-close{right:auto;left:0}.swal2-rtl .swal2-timer-progress-bar{right:0;left:auto}@supports (-ms-accelerator:true){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@media all and (-ms-high-contrast:none),(-ms-high-contrast:active){.swal2-range input{width:100%!important}.swal2-range output{display:none}}@-webkit-keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@keyframes swal2-toast-show{0%{transform:translateY(-.625em) rotateZ(2deg)}33%{transform:translateY(0) rotateZ(-2deg)}66%{transform:translateY(.3125em) rotateZ(2deg)}100%{transform:translateY(0) rotateZ(0)}}@-webkit-keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@keyframes swal2-toast-hide{100%{transform:rotateZ(1deg);opacity:0}}@-webkit-keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@keyframes swal2-toast-animate-success-line-tip{0%{top:.5625em;left:.0625em;width:0}54%{top:.125em;left:.125em;width:0}70%{top:.625em;left:-.25em;width:1.625em}84%{top:1.0625em;left:.75em;width:.5em}100%{top:1.125em;left:.1875em;width:.75em}}@-webkit-keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@keyframes swal2-toast-animate-success-line-long{0%{top:1.625em;right:1.375em;width:0}65%{top:1.25em;right:.9375em;width:0}84%{top:.9375em;right:0;width:1.125em}100%{top:.9375em;right:.1875em;width:1.375em}}@-webkit-keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@keyframes swal2-show{0%{transform:scale(.7)}45%{transform:scale(1.05)}80%{transform:scale(.95)}100%{transform:scale(1)}}@-webkit-keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@keyframes swal2-hide{0%{transform:scale(1);opacity:1}100%{transform:scale(.5);opacity:0}}@-webkit-keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@keyframes swal2-animate-success-line-tip{0%{top:1.1875em;left:.0625em;width:0}54%{top:1.0625em;left:.125em;width:0}70%{top:2.1875em;left:-.375em;width:3.125em}84%{top:3em;left:1.3125em;width:1.0625em}100%{top:2.8125em;left:.8125em;width:1.5625em}}@-webkit-keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@keyframes swal2-animate-success-line-long{0%{top:3.375em;right:2.875em;width:0}65%{top:3.375em;right:2.875em;width:0}84%{top:2.1875em;right:0;width:3.4375em}100%{top:2.375em;right:.5em;width:2.9375em}}@-webkit-keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes swal2-rotate-success-circular-line{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@-webkit-keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@keyframes swal2-animate-error-x-mark{0%{margin-top:1.625em;transform:scale(.4);opacity:0}50%{margin-top:1.625em;transform:scale(.4);opacity:0}80%{margin-top:-.375em;transform:scale(1.15)}100%{margin-top:0;transform:scale(1);opacity:1}}@-webkit-keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@keyframes swal2-animate-error-icon{0%{transform:rotateX(100deg);opacity:0}100%{transform:rotateX(0);opacity:1}}@-webkit-keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}@keyframes swal2-rotate-loading{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow:hidden}body.swal2-height-auto{height:auto!important}body.swal2-no-backdrop .swal2-container{top:auto;right:auto;bottom:auto;left:auto;max-width:calc(100% - .625em * 2);background-color:transparent!important}body.swal2-no-backdrop .swal2-container>.swal2-modal{box-shadow:0 0 10px rgba(0,0,0,.4)}body.swal2-no-backdrop .swal2-container.swal2-top{top:0;left:50%;transform:translateX(-50%)}body.swal2-no-backdrop .swal2-container.swal2-top-left,body.swal2-no-backdrop .swal2-container.swal2-top-start{top:0;left:0}body.swal2-no-backdrop .swal2-container.swal2-top-end,body.swal2-no-backdrop .swal2-container.swal2-top-right{top:0;right:0}body.swal2-no-backdrop .swal2-container.swal2-center{top:50%;left:50%;transform:translate(-50%,-50%)}body.swal2-no-backdrop .swal2-container.swal2-center-left,body.swal2-no-backdrop .swal2-container.swal2-center-start{top:50%;left:0;transform:translateY(-50%)}body.swal2-no-backdrop .swal2-container.swal2-center-end,body.swal2-no-backdrop .swal2-container.swal2-center-right{top:50%;right:0;transform:translateY(-50%)}body.swal2-no-backdrop .swal2-container.swal2-bottom{bottom:0;left:50%;transform:translateX(-50%)}body.swal2-no-backdrop .swal2-container.swal2-bottom-left,body.swal2-no-backdrop .swal2-container.swal2-bottom-start{bottom:0;left:0}body.swal2-no-backdrop .swal2-container.swal2-bottom-end,body.swal2-no-backdrop .swal2-container.swal2-bottom-right{right:0;bottom:0}@media print{body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown){overflow-y:scroll!important}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown)>[aria-hidden=true]{display:none}body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) .swal2-container{position:static!important}}body.swal2-toast-shown .swal2-container{background-color:transparent}body.swal2-toast-shown .swal2-container.swal2-top{top:0;right:auto;bottom:auto;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-top-end,body.swal2-toast-shown .swal2-container.swal2-top-right{top:0;right:0;bottom:auto;left:auto}body.swal2-toast-shown .swal2-container.swal2-top-left,body.swal2-toast-shown .swal2-container.swal2-top-start{top:0;right:auto;bottom:auto;left:0}body.swal2-toast-shown .swal2-container.swal2-center-left,body.swal2-toast-shown .swal2-container.swal2-center-start{top:50%;right:auto;bottom:auto;left:0;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-center{top:50%;right:auto;bottom:auto;left:50%;transform:translate(-50%,-50%)}body.swal2-toast-shown .swal2-container.swal2-center-end,body.swal2-toast-shown .swal2-container.swal2-center-right{top:50%;right:0;bottom:auto;left:auto;transform:translateY(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-left,body.swal2-toast-shown .swal2-container.swal2-bottom-start{top:auto;right:auto;bottom:0;left:0}body.swal2-toast-shown .swal2-container.swal2-bottom{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%)}body.swal2-toast-shown .swal2-container.swal2-bottom-end,body.swal2-toast-shown .swal2-container.swal2-bottom-right{top:auto;right:0;bottom:0;left:auto}body.swal2-toast-column .swal2-toast{flex-direction:column;align-items:stretch}body.swal2-toast-column .swal2-toast .swal2-actions{flex:1;align-self:stretch;height:2.2em;margin-top:.3125em}body.swal2-toast-column .swal2-toast .swal2-loading{justify-content:center}body.swal2-toast-column .swal2-toast .swal2-input{height:2em;margin:.3125em auto;font-size:1em}body.swal2-toast-column .swal2-toast .swal2-validation-message{font-size:1em}</style><meta name="theme-color" content="#4051b5"><meta name="color-scheme" content="light"><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuSlider {  left: .1em;}
+.CtxtMenu_SliderValue {  position:absolute; right:.1em; padding-top:.25em; color:#333333;  font-size: .75em}
+.CtxtMenu_SliderBar {  outline: none; background: #d3d3d3}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_SelectionMenu {  position:relative; float:left;  border-bottom: none; -webkit-box-shadow:none; -webkit-border-radius:0px; }
+.CtxtMenu_SelectionItem {  padding-right: 1em;}
+.CtxtMenu_Selection {  right: 40%; width:50%; }
+.CtxtMenu_SelectionBox {  padding: 0em; max-height:20em; max-width: none;  background-color:#FFFFFF;}
+.CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><link rel="stylesheet" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/waifu.css"><script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/live2d.min.js.下载"></script><script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/waifu-tips.js.下载"></script><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+_::-webkit-full-page-media, _:future, :root mjx-container {
+  will-change: opacity;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style><style id="lkb2ydx7.ox">
+                .lh-popup {
+                    font-size: 1em;
+                    font: 16px/1.5 'Microsoft Yahei',arial,helvetica,sans-serif;
+                }
+
+                .lh-content {
+                    padding: 0;
+                }
+                
+                .lh-close {
+                    box-shadow: none;
+                }
+
+                .lh-close:focus {
+                    box-shadow: none;
+                }
+
+
+                .lh-menu {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    font-size: 18px;
+                }
+
+                .lh-item {
+                    padding-top: 20px;
+                    margin-bottom: 0;
+                }
+
+                .lh-footer {
+                    font-size: 16px;
+                }
+
+                .lh-footer a {
+                    font-size: 18px;
+                    font-weight: 700;
+                }
+
+                .lh-item label{
+                    font-weight: normal;
+                    display: inline-block;
+                    font-size: 18px;
+                    margin-bottom: 0;
+                }
+
+                .lh-item input {
+                    -webkit-appearance: auto !important;
+                    background: white;
+                    width: auto;
+                    height: auto;
+                    float: none;
+                    margin-bottom: 0;
+                    border: 1px solid #e2e2e2;
+                    font-size: 18px;
+                    padding: 0;
+                }
+
+                .lh-item input[type="range"] {
+                    display: inline-block;
+                }
+
+                .lh-item select {
+                    width: auto;
+                    border: 1px solid #e2e2e2;
+                    font-size: 16px;
+                    display: inline-block;
+                    background-color: #f8f8f8;
+                    color: #aaaaaa;
+                    padding: 0 30px 0 2px;
+                    border-radius: 3px;
+                    height: 30px;
+                    line-height: 28px;
+                    outline: none;
+                    appearance: none;
+                    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAANCAYAAAC+ct6XAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBNYWNpbnRvc2giIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RjBBRUQ1QTQ1QzkxMTFFMDlDNDdEQzgyNUE1RjI4MTEiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RjBBRUQ1QTU1QzkxMTFFMDlDNDdEQzgyNUE1RjI4MTEiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpGMEFFRDVBMjVDOTExMUUwOUM0N0RDODI1QTVGMjgxMSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpGMEFFRDVBMzVDOTExMUUwOUM0N0RDODI1QTVGMjgxMSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk5mU4QAAACUSURBVHjaYmRgYJD6////MwY6AyaGAQIspCieM2cOjKkIxCFA3A0TSElJoZ3FUCANxAeAWA6IOYG4iR5BjWwpCDQCcSnNgxoIVJCDFwnwA/FHWlp8EIpHSKoGgiggLkITewrEcbQO6mVAbAbE+VD+a3IsJTc7FQAxDxD7AbEzEF+jR1DDywtoCr9DbhwzDlRZDRBgACYqHJO9bkklAAAAAElFTkSuQmCC);
+                    background-position: center right;
+                    background-repeat: no-repeat;
+                }
+
+                .lh-item button {
+                    border: 1px solid #e2e2e2;
+                    font-size: 16px;
+                    padding: 2px 5px;
+                    border-radius: 10px;
+                    color: #000;
+                    background-color: #f0f0f0;
+                }
+
+                .lh-item button:hover {
+                    background-color: #3e97eb;
+                    color: white;
+                }
+
+                @keyframes hover-color {
+                    from {
+                        border-color: #e2e2e2;
+                    }
+                    to {
+                        border-color: #3e97eb;
+                    } 
+                }
+
+                .lh-item input[type="checkbox"] {
+                    display: none;
+                    position: absolute;
+                }
+
+                .lh-item input[type="checkbox"]+span {
+                    position: relative;
+                    padding-left: 30px;
+                    cursor: pointer;
+                }
+
+                .lh-item input[type="checkbox"]+span:hover:before {
+                    animation-duration: 0.4s;
+                    animation-fill-mode: both;
+                    animation-name: hover-color;
+                }
+
+                .lh-item input[type="checkbox"]+span:before {
+                    position: absolute;
+                    top: 2px;
+                    left: 5px;
+                    display: inline-block;
+                    width: 20px;
+                    height: 20px;
+                    content: "";
+                    border: 1px solid #e2e2e2;
+                    border-radius: 3px;
+                }
+
+                .lh-item input[type="checkbox"]+span:after {
+                    position: absolute;
+                    display: none;
+                    content: "";
+                    top: 4px;
+                    left: 12px;
+                    box-sizing: border-box;
+                    width: 6px;
+                    height: 12px;
+                    transform: rotate(45deg);
+                    border-width: 2px;
+                    border-style: solid;
+                    border-color: #fff;
+                    border-top: 0;
+                    border-left: 0
+                }
+
+                .lh-item input[type="checkbox"]:checked+span:before {
+                    animation-name: none;
+                    border: #3e97eb;
+                    background: #3e97eb;
+                }
+
+                .lh-item input[type="checkbox"]:checked+span:after {
+                    display: block;
+                }
+            </style><style data-id="immersive-translate-input-injected-css">.immersive-translate-input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2147483647;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.immersive-translate-input-loading {
+  --loading-color: #f78fb6;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+  margin: 12px auto;
+  position: relative;
+  color: white;
+  left: -100px;
+  box-sizing: border-box;
+  animation: immersiveTranslateShadowRolling 1.5s linear infinite;
+}
+
+@keyframes immersiveTranslateShadowRolling {
+  0% {
+    box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  12% {
+    box-shadow: 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  25% {
+    box-shadow: 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  36% {
+    box-shadow: 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color), 0px 0 rgba(255, 255, 255, 0);
+  }
+
+  50% {
+    box-shadow: 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color), 100px 0 var(--loading-color);
+  }
+
+  62% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color), 110px 0 var(--loading-color);
+  }
+
+  75% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color), 120px 0 var(--loading-color);
+  }
+
+  87% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 130px 0 var(--loading-color);
+  }
+
+  100% {
+    box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+  }
+}
+
+
+.immersive-translate-search-recomend {
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  font-size: 16px;
+}
+.immersive-translate-search-enhancement-en-title {
+  color: #4d5156;
+}
+/* dark */
+@media (prefers-color-scheme: dark) {
+  .immersive-translate-search-recomend {
+    border: 1px solid #3c4043;
+  }
+  .immersive-translate-close-action svg {
+    fill: #bdc1c6;
+  }
+
+.immersive-translate-search-enhancement-en-title {
+  color: #bdc1c6;
+}
+}
+
+
+.immersive-translate-search-settings {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+.immersive-translate-search-recomend::before {
+  /* content: " "; */
+  /* width: 20px; */
+  /* height: 20px; */
+  /* top: 16px; */
+  /* position: absolute; */
+  /* background: center / contain url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAxlBMVEUAAADpTInqTIjpSofnSIfqS4nfS4XqS4nqTIjsTYnrTInqTIroS4jvQIDqTIn////+/v7rSYjpTIn8/v7uaZzrTIr9/f3wfansWJL88/b85e73qc39+/v3xNnylrvrVI/98fb62Obva5/8+fr76vH4y9zpSIj74e353Oj1ocTzm77xhK/veKbtYpjsXJTqU47oTInxjrXyh7L99fj40eH2ttH1udD3sc31ssz1rMnykLXucqPtbqD85e/1xdn2u9DzqcXrUY6FaJb8AAAADnRSTlMA34BgIM8Q37/fz7+/EGOHcVQAAAGhSURBVDjLhZPncuowEEZFTW7bXVU7xsYYTO/p7bb3f6lICIOYJOT4h7/VnFmvrBFjrF3/CR/SajBHswafctG0Qg3O8O0Xa8BZ6uw7eLjqr30SofCDVSkemMinfL1ecy20r5ygR5zz3ArcAqJExPTPKhDENEmS30Q9+yo4lEQkqVTiIEAHCT10xWERRdH0Bq0aCOPZNDV3s0xaYce1lHEoDHU8wEh3qRJypNcTAeKUIjgKMeGLDoRCLVLTVf+Ownj8Kk6H9HM6QXPgYjQSB0F00EJEu10ILQrs/QeP77BSSr0MzLOyuJJQbnUoOOIUI/A8EeJk9E4YUHUWiRyTVKGgQUB8/3e/NpdGlfI+FMQyWsCBWyz4A/ZyHXyiiz0Ne5aGZssoxRmcChw8/EFKQ5JwwkUo3FRT5yXS7q+Y/rHDZmFktzpGMvO+5QofA4FPpEmGw+EWRCFvnaof7Zhe8NuYSLR0xErKLThUSs8gnODh87ssy6438yzbLzxl012HS19vfCf3CNhnbWOL1eEsDda+gDPUvri8tSZzNFrwIZf1NmNvqC1I/t8j7nYAAAAASUVORK5CYII='); */
+}
+
+.immersive-translate-search-title {}
+
+.immersive-translate-search-title-wrapper {}
+
+.immersive-translate-search-time {
+  font-size: 12px;
+  margin: 4px 0 24px;
+  color: #70757a;
+}
+
+.immersive-translate-expand-items {
+  display: none;
+}
+
+.immersive-translate-search-more {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.immersive-translate-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.immersive-translate-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 500px;
+  font-family: system-ui, -apple-system, "Segoe UI", "Roboto", "Ubuntu",
+    "Cantarell", "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.immersive-translate-modal-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: hsl(205, 20%, 32%);
+}
+
+.immersive-translate-modal-body {
+  color: hsl(205, 20%, 32%)
+}
+
+.immersive-translate-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.immersive-translate-close:hover,
+.immersive-translate-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.immersive-translate-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.immersive-translate-btn {
+  color: #fff;
+  background-color: #ea4c89;
+  border: none;
+  font-size: 14px;
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.immersive-translate-cancel-btn {
+  /* gray color */
+  background-color: rgb(89, 107, 120);
+}
+
+.immersive-translate-btn:hover {
+  background-color: #f082ac;
+}
+
+.immersive-translate-cancel-btn:hover {
+  background-color: hsl(205, 20%, 32%);
+}
+
+
+.immersive-translate-btn svg {
+  margin-right: 5px;
+}
+
+.immersive-translate-link {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-drag: none;
+  text-decoration: none;
+  color: #007bff;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, .1);
+}
+
+.immersive-translate-modal input[type="radio"] {
+  margin: 0 6px 16px;
+  cursor: pointer;
+}
+
+.immersive-translate-modal label {
+  cursor: pointer;
+}
+
+.immersive-translate-close-action {
+  position: absolute;
+  top: 2px;
+  right: 0px;
+  cursor: pointer;
+}
+</style></head><remove-web-limits-iqxin id="rwl-iqxin" class="rwl-exempt" style="position: fixed; top: 2px; left: 0px;"><qxinbutton type="qxinbutton" id="rwl-setbtn"> set </qxinbutton> <lalala style="cursor:move; font-size:12px;">限制解除</lalala> <input type="checkbox" name="" id="black_node"><style type="text/css">#rwl-iqxin{position:fixed;transform:translate(-95%,0);width:85px;height:25px;font-size:12px;font-weight: 500;font-family:Verdana, Arial, '宋体';color:#fff;background:#333;z-index:2147483647;margin: 0;opacity:0.05;transition:0.3s;overflow:hidden;user-select:none;text-align:center;white-space:nowrap;line-height:25px;padding:0 16px;border:1px solid #ccc;border-width:1px 1px 1px 0;border-bottom-right-radius:5px;box-sizing: content-box;}#rwl-iqxin input{margin: 0;padding: 0;vertical-align:middle;-webkit-appearance:checkbox !important;-moz-appearance:checkbox;position: static;clip: auto;opacity: 1;cursor: pointer;}#rwl-iqxin.rwl-active-iqxin{left: 0px;transform:translate(0,0);opacity: 0.9;height: 32px;line-height: 32px}#rwl-iqxin label{margin:0;padding:0;font-weight:500;}#rwl-iqxin #rwl-setbtn{margin: 0 4px 0 0;padding: 0 0 0 4px;border: none;border-radius: 2px;cursor: pointer;background: #fff;color: #000;} </style></remove-web-limits-iqxin>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="https://blog.arisa.moe/" title="Arisa | Blog" class="md-header__button md-logo" aria-label="Arisa | Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 13H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-8.5C0 1.784.784 1 1.75 1ZM1.5 2.75v8.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm5.28 1.72a.75.75 0 0 1 0 1.06L5.31 7l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.75.75 0 0 1 1.06 0Zm2.44 0a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.69 7 9.22 5.53a.75.75 0 0 1 0-1.06Z"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Arisa | Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="进入夜间模式" type="radio" name="__palette" id="__palette_1">
+            
+              <label class="md-header__button md-icon" title="进入夜间模式" for="__palette_2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"></path></svg>
+              </label>
+            
+          
+            
+            
+            
+            <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="进入日间模式" type="radio" name="__palette" id="__palette_2">
+            
+              <label class="md-header__button md-icon" title="进入日间模式" for="__palette_1" hidden="">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"></path></svg>
+              </label>
+            
+          
+        </form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required="">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"></path></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">键入以开始搜索</div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/zhanbao2000/blog" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository md-source__repository--active">
+    zhanbao2000/blog
+  <ul class="md-source__facts"><li class="md-source__fact md-source__fact--stars">0</li><li class="md-source__fact md-source__fact--forks">1</li></ul></div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="https://blog.arisa.moe/" class="md-tabs__link">
+      主页
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="https://blog.arisa.moe/tags/" class="md-tabs__link">
+      标签
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="https://blog.arisa.moe/toc/" class="md-tabs__link">
+      目录
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="https://blog.arisa.moe/blog/2022/220406-nginx-stream/" class="md-tabs__link md-tabs__link--active">
+        Blog
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" style="top: 58px;">
+                <div class="md-sidebar__scrollwrap" style="height: 1080px;">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://blog.arisa.moe/" title="Arisa | Blog" class="md-nav__button md-logo" aria-label="Arisa | Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 1h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 13H8.061l-2.574 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25v-8.5C0 1.784.784 1 1.75 1ZM1.5 2.75v8.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25H1.75a.25.25 0 0 0-.25.25Zm5.28 1.72a.75.75 0 0 1 0 1.06L5.31 7l1.47 1.47a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-2-2a.75.75 0 0 1 0-1.06l2-2a.75.75 0 0 1 1.06 0Zm2.44 0a.75.75 0 0 1 1.06 0l2 2a.75.75 0 0 1 0 1.06l-2 2a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042L10.69 7 9.22 5.53a.75.75 0 0 1 0-1.06Z"></path></svg>
+
+    </a>
+    Arisa | Blog
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/zhanbao2000/blog" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"></path></svg>
+  </div>
+  <div class="md-source__repository md-source__repository--active">
+    zhanbao2000/blog
+  <ul class="md-source__facts"><li class="md-source__fact md-source__fact--stars">0</li><li class="md-source__fact md-source__fact--forks">1</li></ul></div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/" class="md-nav__link">
+        主页
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/tags/" class="md-nav__link">
+        标签
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/toc/" class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked="">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Blog
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Blog
+        </label>
+        <ul class="md-nav__list">
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" checked="">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+          2022
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          2022
+        </label>
+        <ul class="md-nav__list">
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220406-nginx-stream/" class="md-nav__link">
+        nginx 如何设置 stream 转发
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220406-set-http-proxy/" class="md-nav__link">
+        解决使用代理后 pip 和 python 无法连接到网络的问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220406-venv-move-file/" class="md-nav__link">
+        移动 python 项目文件夹位置后如何解决 PyCharm 找不到解释器与无法正常使用终端的问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220407-certbot/" class="md-nav__link">
+        certbot 常用操作
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220407-github-pages/" class="md-nav__link">
+        GitHub Pages 文档自动化部署 - MkDocs
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220408-github-pages-2/" class="md-nav__link">
+        GitHub Pages 文档自动化部署 - VuePress
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220409-cloudflare-workers-arcaea-update/" class="md-nav__link">
+        如何使用 Cloudflare Workers 来搭建 Arcaea 镜像下载服务器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220412-ida-substitute-usage/" class="md-nav__link">
+        IDA 替换二进制文件
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220413-Intranet-penetration-bitcomit/" class="md-nav__link">
+        利用内网穿透和代理获取公网 IP 地址解决比特彗星黄灯
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220414-fk-arcaea-songlist-hash/" class="md-nav__link">
+        解除 Arcaea 对 songlist 等文件的哈希校验
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220416-arcaea-fanmade-chart-problem/" class="md-nav__link">
+        Arcaea 自制谱移植常见问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220417-linux-clean-up-disk-space/" class="md-nav__link">
+        Linux 清理磁盘空间常见操作
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220421-use-gzip-bomb-against-scanner/" class="md-nav__link">
+        如何使用 gzip 压缩包炸弹对恶意扫描器进行反击
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220428-how-to-ask-questions-like-a-retard/" class="md-nav__link">
+        如何像一个弱智一样提问
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/" class="md-nav__link md-nav__link--active">
+        基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_1" class="md-nav__link">
+    绪论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_2" class="md-nav__link">
+    拟议方案的前提条件
+  </a>
+  
+    <nav class="md-nav" aria-label="拟议方案的前提条件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_3" class="md-nav__link">
+    系统架构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda" class="md-nav__link">
+    Conda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#visual-studio" class="md-nav__link">
+    Visual Studio
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_4" class="md-nav__link">
+    拟议方案的执行步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="拟议方案的执行步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda_1" class="md-nav__link">
+    构建 Conda 环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#cuda-cudnn" class="md-nav__link">
+    安装 CUDA 和 cuDNN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib" class="md-nav__link">
+    获取 dlib 源码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_5" class="md-nav__link">
+    在构建之前
+  </a>
+  
+    <nav class="md-nav" aria-label="在构建之前">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#msvc-x64" class="md-nav__link">
+    进入 MSVC x64 编译环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_1" class="md-nav__link">
+    修改 dlib 源码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_6" class="md-nav__link">
+    开始构建
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_7" class="md-nav__link">
+    尝试编译
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_8" class="md-nav__link">
+    尝试安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_9" class="md-nav__link">
+    在安装之后
+  </a>
+  
+    <nav class="md-nav" aria-label="在安装之后">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_2" class="md-nav__link">
+    卸载旧版本的 dlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#windows" class="md-nav__link">
+    关闭 Windows 错误报告服务
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_10" class="md-nav__link">
+    结论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_11" class="md-nav__link">
+    致谢
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220502-how-dogs-work-in-epic7/" class="md-nav__link">
+        第七史诗升六星的正确理解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220511-how-to-write-python-into-classical-chinese/" class="md-nav__link">
+        如何将 Python 写成文言文
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220529-python-personal-styleguide/" class="md-nav__link">
+        Python 个人代码风格指导
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220530-auto-sign-in-guide/" class="md-nav__link">
+        自动签到使用指南
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220602-ipv6-bypass-billing-system/" class="md-nav__link">
+        架设双栈代理服务器通过 IPv6 绕过校园网计费系统的方法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220902-python-mutable-defaults/" class="md-nav__link">
+        Python 默认参数可变的危险性
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/220913-python-confusing-detail/" class="md-nav__link">
+        Python 中令人迷惑的细节
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/221113-rclone-sharepoint-for-hentai-at-home/" class="md-nav__link">
+        使用 Rclone 挂载 SharePoint 作为 Hentai@Home 的缓存目录
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/221113-rclone-sharepoint-oauth-failed/" class="md-nav__link">
+        通过 WebDAV 解决 Rclone 挂载 SharePoint 时遇到 Error: Auth Error
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2022/221115-issue-of-position-or-right-and-wrong/" class="md-nav__link">
+        立场问题与是非问题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2">
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+          2023
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          2023
+        </label>
+        <ul class="md-nav__list">
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230113-my-2022-website/" class="md-nav__link">
+        我的浏览器 2022 年度总结
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230114-matrix-qq-wechat-bridge/" class="md-nav__link">
+        通过 Matrix 协议实现代理接收 QQ 和微信消息 —— 从入坑到入土
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230309-pycharm-git-submodule/" class="md-nav__link">
+        如何在 PyCharm 中使用 Git Submodule
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230406-pillow-affine-args/" class="md-nav__link">
+        （Pillow）Affine 图形变换的矩阵参数详解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230428-mokabot-arcaea/" class="md-nav__link">
+        mokabot 的 Arcaea 模块发展史
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230504-chart-analysis-425ex/" class="md-nav__link">
+        《SWITCH ON NOW》 AP 解析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://blog.arisa.moe/blog/2023/230512-arcaea-webapi-archive/" class="md-nav__link">
+        （存档）什么是 webapi 查分方案
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" style="top: 58px;">
+                <div class="md-sidebar__scrollwrap" style="height: 1080px;">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc">
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_1" class="md-nav__link">
+    绪论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_2" class="md-nav__link">
+    拟议方案的前提条件
+  </a>
+  
+    <nav class="md-nav" aria-label="拟议方案的前提条件">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_3" class="md-nav__link">
+    系统架构
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda" class="md-nav__link">
+    Conda
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#visual-studio" class="md-nav__link">
+    Visual Studio
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_4" class="md-nav__link">
+    拟议方案的执行步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="拟议方案的执行步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda_1" class="md-nav__link">
+    构建 Conda 环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#cuda-cudnn" class="md-nav__link">
+    安装 CUDA 和 cuDNN
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib" class="md-nav__link">
+    获取 dlib 源码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_5" class="md-nav__link">
+    在构建之前
+  </a>
+  
+    <nav class="md-nav" aria-label="在构建之前">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#msvc-x64" class="md-nav__link">
+    进入 MSVC x64 编译环境
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_1" class="md-nav__link">
+    修改 dlib 源码
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_6" class="md-nav__link">
+    开始构建
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_7" class="md-nav__link">
+    尝试编译
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_8" class="md-nav__link">
+    尝试安装
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_9" class="md-nav__link">
+    在安装之后
+  </a>
+  
+    <nav class="md-nav" aria-label="在安装之后">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_2" class="md-nav__link">
+    卸载旧版本的 dlib
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#windows" class="md-nav__link">
+    关闭 Windows 错误报告服务
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_10" class="md-nav__link">
+    结论
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_11" class="md-nav__link">
+    致谢
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+
+<!--
+Hack: check whether the content contains a h1 headline. If it
+doesn't, the page title (or respectively site name) is used
+as the main headline.
+-->
+
+    <h1>基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案</h1>
+
+
+<!-- Markdown content -->
+
+    
+
+        <aside class="mdx-author">
+            <p>
+                <img src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/zhanbao2000" alt="@zhanbao2000">
+            </p>
+            <p>
+                <span>
+                    <b>Akiba Arisa</b> · <a href="https://github.com/zhanbao2000">@zhanbao2000</a>
+                </span>
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-clock" viewBox="0 0 16 16">
+                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"></path>
+                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"></path>
+                    </svg> 30 min read
+                </span>
+            </p>
+        </aside>
+
+    
+
+    
+        <div class="tags">
+        
+            <a href="https://blog.arisa.moe/tags/#dlib" class="tag"><code>#dlib</code></a>
+        
+            <a href="https://blog.arisa.moe/tags/#visual-studio" class="tag"><code>#visual-studio</code></a>
+        
+            <a href="https://blog.arisa.moe/tags/#python" class="tag"><code>#python</code></a>
+        
+            <a href="https://blog.arisa.moe/tags/#anaconda" class="tag"><code>#anaconda</code></a>
+        
+        </div>
+    
+
+    <h2 id="_1">绪论<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_1" title="Permanent link">¶</a></h2>
+<blockquote>
+<p>历时 14 个小时，反复下载高达 60 GB，重新部署整个 Visual Studio 多达 5 次，从而打磨出的 dlib 安装终极解决方案，专注于解决 dlib 安装过程中出现的各种疑难杂症。</p>
+</blockquote>
+<p>你是否有以下苦恼？</p>
+<ul>
+<li>You must use Visual Studio to build a python extension on Windows</li>
+<li>对着十几个 GB 的 Visual Studio 发愁</li>
+<li>Anaconda 装上的 dlib 没法调用 GPU</li>
+<li>不仅 GPU 占用率为 0，CPU 也跑不满</li>
+<li>装上了 Visual Studio，仍然无法编译 dlib</li>
+<li>x64 和 x86 打架</li>
+<li>几个 CMake 一起打架</li>
+<li>英伟达 CUDA 驱动在 C 盘到处释放文件（lashi）</li>
+<li>明明装了 CUDA，CMakeList 却以各种各样的理由不让你用</li>
+<li>例如嫌弃你的 CUDA 版本太高或太低</li>
+<li>例如嫌弃你的 Visual Studio 版本太高或太低</li>
+<li>CMakeList.txt 第 5 行经典报错</li>
+<li>Permission Denied</li>
+<li>Temp 文件夹写入不了了</li>
+<li>error C2734: “GifAsciiTable8x8”: 如果不是外部的，则必须初始化常量对象</li>
+<li>error C2065: “ssize_t”: 未声明的标识符</li>
+<li>历经千辛万苦装完了结果还是 <code class="highlight"><span class="n">dlib</span><span class="o">.</span><span class="n">DLIB_USE_CUDA</span> <span class="o">==</span> <span class="kc">False</span></code></li>
+<li>...</li>
+</ul>
+<p>装 <a href="https://github.com/davisking/dlib">dlib</a> 一直是机器学习领域的一个大难题，它要求开发人员拥有某些特定的 CUDA + Visual Studio + dlib + python 版本的组合，这些组合一旦有一个环节出了问题，就会导致整个 dlib 没法用，而 dlib 又是很多库（例如 <a href="https://github.com/ageitgey/face_recognition">face_recognition</a> ）的依赖库。这些艰难险阻将极大地打击开发人员在机器学习领域攻坚的信心。</p>
+<p>即使是有 <code>万能</code> 之称的 <a href="https://anaconda.org/">Anaconda</a> ，它也不能完全这个问题。因为它下载的 dlib 没有提供 GPU 支持，这直接造成了 <code>一核有难，万核围观</code> 的经典局面。而目前（2022 年 4 月底）唯一能在 Anaconda 仓库中找到的有关 CUDA 和 GPU 的软件包只提供了 Linux 的编译版本（<a href="https://anaconda.org/zeroae/dlib-cuda">zeroae/dlib-cuda</a> 和 <a href="https://anaconda.org/hoan/dlib-gpu">hoan/dlib-gpu</a> ）且均很长时间没有更新。</p>
+<p>这使得手头没有 Visual Studio 的开发人员（其实就算有 Visual Studio 也差不多）在 Windows 平台上利用 CNN（卷积神经网络）进行人脸识别或者其他机器学习任务时，简直和坐牢一样。</p>
+<p>这个方案的出现，就是为了用一个简单、直观、有效的方法，一次性解决这个问题。</p>
+<h2 id="_2">拟议方案的前提条件<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_2" title="Permanent link">¶</a></h2>
+<p>在所有步骤开始之前，请先确保你满足以下前提条件：</p>
+<h3 id="_3">系统架构<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_3" title="Permanent link">¶</a></h3>
+<p>为了避免不必要的麻烦，请在接下来的<strong>所有步骤</strong>中，均使用 64 位系统架构（amd64 或者 x64）。</p>
+<h3 id="conda">Conda<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda" title="Permanent link">¶</a></h3>
+<p>目前我的版本是 <a href="https://anaconda.org/">Anaconda</a> 1.9.0，其他版本<strong>应该</strong>不影响。同理，Python 版本<strong>应该</strong>也不影响。</p>
+<h3 id="visual-studio"><a href="https://my.visualstudio.com/Downloads/Featured?mkt=zh-cn">Visual Studio</a><a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#visual-studio" title="Permanent link">¶</a></h3>
+<p>以下 Visual Studio 中，你至少需要拥有一个：</p>
+<ul>
+<li>Visual Studio 2019</li>
+<li>Build Tools for Visual Studio 2019</li>
+<li>Visual Studio 2017</li>
+<li>Build Tools for Visual Studio 2017</li>
+</ul>
+<p>因为我不想下十几个 GB 的 Visual Studio 2019/2017，所以我使用的是 Build Tools for Visual Studio 2019。即使是这样，他仍然会占用我大约 4 GB 的磁盘空间（其中 C 盘固定占用约 2 GB），但这比起来已经足够小了。</p>
+<div class="admonition 危险 danger">
+<p class="admonition-title">危险</p>
+<p>你可能想问 Visual Studio 2015（含）以下等不在此列的 Visual Studio 版本行不行，这里明确表示：</p>
+<p><strong><em>不行！！！</em></strong></p>
+<div class="highlight"><pre id="__code_0"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_0 &gt; code"></button><code tabindex="0"><span class="cp">#if _MSC_VER &lt; 1910 || _MSC_VER &gt;= 1930</span>
+<span class="cp">#error -- unsupported Microsoft Visual Studio version! Only the versions between 2017 and 2019 (inclusive) are</span>
+</code></pre></div>
+<p>另见：</p>
+<ul>
+<li><a href="https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html">CUDA Installation Guide for Microsoft Windows</a></li>
+<li><a href="https://gist.github.com/ax3l/9489132#nvcc">CUDA Compilers</a></li>
+</ul>
+</div>
+<p>以下 Visual Studio 工作负载中，<strong>必须</strong>全部拥有：</p>
+<ul>
+<li>MSVC VS 2017（或 2019）C++ x64/x86 生成工具</li>
+<li>Windows 10 SDK</li>
+<li>用于 Windows 的 C++ CMake 工具</li>
+</ul>
+<div class="admonition 危险 danger">
+<p class="admonition-title">危险</p>
+<p>注意最后一个</p>
+<ul>
+<li>用于 Windows 的 C++ CMake 工具</li>
+</ul>
+<p>就算你已经有了 <a href="https://github.com/Kitware/CMake">Kitware 的 CMake</a> 你仍然需要勾选，不然就算通过了 CXX 编译器测试阶段，在实际编译的时候仍然可能 broken。</p>
+</div>
+<p>如图所示：</p>
+<p><a class="glightbox" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/vs-installer.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="vs-installer" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/vs-installer.jpg"></a></p>
+<p>记得修改安装路径，别一股脑全塞 C 盘了：</p>
+<p><a class="glightbox" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/change-install-path.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="change-install-path" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/change-install-path.jpg"></a></p>
+<div class="admonition 危险 danger">
+<p class="admonition-title">危险</p>
+<p>请在退出 Visual Studio Installer 后立即检查你的临时文件夹，例如 <code>C:\Users\AkibaArisa\Temp</code>，Visual Studio Installer 可能会修改这个文件夹的权限，导致除了 <code>以管理员权限运行</code> 的程序以外，均无法写入该文件夹。</p>
+<p>你所需要做的就是检查这个临时文件夹的权限，如果发现有问题，则用以下方法修改这个文件夹的权限：</p>
+<p>右键该文件夹 - <code>属性</code> - <code>安全</code> - <code>编辑</code> - <code>Everyone</code> - 勾选 <code>完全控制</code> - <code>确认</code></p>
+</div>
+<h2 id="_4">拟议方案的执行步骤<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_4" title="Permanent link">¶</a></h2>
+<h3 id="conda_1">构建 Conda 环境<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#conda_1" title="Permanent link">¶</a></h3>
+<p>笔者的 PyCharm 能让新项目选择 Conda 环境并默认构建好，这里略过使用 IDE 构建的方法。</p>
+<p><a class="glightbox" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/pycharm-new-project.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="pycharm-new-project" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/pycharm-new-project.jpg"></a></p>
+<p>或者使用手动构建：</p>
+<div class="highlight"><pre id="__code_1"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_1 &gt; code"></button><code>conda create -n dlib_build_test python=3.10
+</code></pre></div>
+<p>然后进入虚拟环境：</p>
+<div class="highlight"><pre id="__code_2"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_2 &gt; code"></button><code>conda activate dlib_build_test
+</code></pre></div>
+<h3 id="cuda-cudnn">安装 CUDA 和 cuDNN<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#cuda-cudnn" title="Permanent link">¶</a></h3>
+<p>不通过 Nvidia 官网，而是通过 Conda 安装 CUDA 和 cuDNN。</p>
+<div class="highlight"><pre id="__code_3"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_3 &gt; code"></button><code>conda install cuda cudnn -c nvidia
+</code></pre></div>
+<p>接下来可能会等待一会，因为要下载很多东西。</p>
+<p>安装后可以通过 <code>conda list</code> 命令确认安装的版本：</p>
+<div class="highlight"><pre id="__code_4"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_4 &gt; code"></button><code># Name                    Version                   Build    Channel
+...
+<span class="hll">cuda                      11.6.2               h65bbf44_0    nvidia
+</span>cuda-cccl                 11.6.55              hd268e57_0    nvidia
+cuda-command-line-tools   11.6.2               h65bbf44_0    nvidia
+cuda-compiler             11.6.2               h65bbf44_0    nvidia
+cuda-cudart               11.6.55              h5fb1900_0    nvidia
+cuda-cuobjdump            11.6.124             h8654613_0    nvidia
+cuda-cupti                11.6.124             h532822a_0    nvidia
+cuda-cuxxfilt             11.6.124             h3f9c74b_0    nvidia
+cuda-libraries            11.6.2               h65bbf44_0    nvidia
+cuda-libraries-dev        11.6.2               h65bbf44_0    nvidia
+cuda-memcheck             11.6.124             hea6bc18_0    nvidia
+cuda-nvcc                 11.6.124             h769bc0d_0    nvidia
+cuda-nvdisasm             11.6.124             he05ff55_0    nvidia
+cuda-nvml-dev             11.6.55              h2bb381e_0    nvidia
+cuda-nvprof               11.6.124             he581663_0    nvidia
+cuda-nvprune              11.6.124             hb892de1_0    nvidia
+cuda-nvrtc                11.6.124             h231bd66_0    nvidia
+cuda-nvrtc-dev            11.6.124             hd7d06dc_0    nvidia
+cuda-nvtx                 11.6.124             hee9d5a4_0    nvidia
+cuda-nvvp                 11.6.124             h6a974fa_0    nvidia
+cuda-runtime              11.6.2               h65bbf44_0    nvidia
+cuda-sanitizer-api        11.6.124             ha4888a7_0    nvidia
+cuda-toolkit              11.6.2               h65bbf44_0    nvidia
+cuda-tools                11.6.2               h65bbf44_0    nvidia
+cuda-visual-tools         11.6.2               h65bbf44_0    nvidia
+cudatoolkit               11.3.1               h59b6b97_2
+<span class="hll">cudnn                     8.2.1                cuda11.3_0
+</span>...
+</code></pre></div>
+<p>显然，我安装的 CUDA 版本是 <code>11.6.2</code>，cuDNN 版本是 <code>8.2.1</code>。</p>
+<p>安装完成后确认 <code>nvcc.exe</code> 的安装位置，并记住它。</p>
+<div class="highlight"><pre id="__code_5"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_5 &gt; code"></button><code><span class="p">(</span>dlib_build_test<span class="p">)</span> I:\Developer\Python\project\dlib_build_test<span class="p">&gt;</span>where nvcc
+<span class="p">:</span><span class="c1">: I:\ProgramData\Anaconda3\envs\dlib_build_test\bin\nvcc.exe</span>
+</code></pre></div>
+<p>例如现在它在 <code>I:\ProgramData\Anaconda3\envs\dlib_build_test\bin\nvcc.exe</code>。</p>
+<h3 id="dlib">获取 dlib 源码<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib" title="Permanent link">¶</a></h3>
+<p>从 Releases 下载：（推荐）<a href="https://github.com/davisking/dlib/archive/refs/tags/v19.23.zip">v19.23</a></p>
+<p>或者从 GitHub克隆：</p>
+<div class="highlight"><pre id="__code_6"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_6 &gt; code"></button><code>git clone https://github.com/davisking/dlib.git
+<span class="k">cd</span> dlib
+</code></pre></div>
+<h3 id="_5">在构建之前<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_5" title="Permanent link">¶</a></h3>
+<h4 id="msvc-x64">进入 MSVC x64 编译环境<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#msvc-x64" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre id="__code_7"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_7 &gt; code"></button><code tabindex="0"><span class="nv">%comspec%</span> /k <span class="s2">"I:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"</span>
+</code></pre></div>
+<p>其中的路径需要根据你的 Visual Studio 的安装位置而改变，但最简单的方法其实是从开始菜单中找到 <code>x64 Native Tools Command Prompt for VS 2019</code> 的快捷方式，然后点击右键查看属性。</p>
+<p><a class="glightbox" href="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/x64-native-prompt.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="x64-native-prompt" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/x64-native-prompt.jpg"></a></p>
+<p>复制并粘贴其 <code>目标</code> 即可。</p>
+<p>运行后，这个 bat 脚本将会自动把 MSVC 的环境变量设置到你的临时环境变量中（仅在当前控制台有效），这样就可以在构建 dlib 的时候使用 MSVC 的编译器了。</p>
+<p>现在我们尝试一下重要的环境变量是否设置正确：</p>
+<div class="highlight"><pre id="__code_8"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_8 &gt; code"></button><code tabindex="0">where cmake
+<span class="p">:</span><span class="c1">: G:\Tools for Windows\CMake\bin\cmake.exe</span>
+<span class="p">:</span><span class="c1">: I:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe</span>
+where nmake
+<span class="p">:</span><span class="c1">: I:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\nmake.exe</span>
+where cl
+<span class="p">:</span><span class="c1">: I:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\cl.exe</span>
+</code></pre></div>
+<div class="admonition 提示 note">
+<p class="admonition-title">提示</p>
+<p>运行 <code>where cmake</code> 的时候出现了两个 <code>cmake</code>，其中一个是 Kitware 的 cmake，另一个是 MSVC 的 cmake。而 dlib 在编译过程中会检查所有 cmake 的路径，如果不存在 MSVC 的 cmake，脚本会报错而停止。</p>
+</div>
+<h4 id="dlib_1">修改 dlib 源码<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_1" title="Permanent link">¶</a></h4>
+<p>见 <a href="https://github.com/davisking/dlib/issues/2463">Dlib failed to build due to many errors: error C2065 and C2338 · Issue #2463 · davisking/dlib</a></p>
+<p>打开 <code>dlib\dlib\external\pybind11\include\pybind11/numpy.h</code>，找到：</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">numpy.h</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span></pre></div></td><td class="code"><div><pre id="__code_9"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_9 &gt; code"></button><code tabindex="0"><span class="cp">#if defined(_MSC_VER)</span>
+<span class="cp">#  pragma warning(push)</span>
+<span class="cp">#  pragma warning(disable: 4127) </span><span class="c1">// warning C4127: Conditional expression is constant</span>
+<span class="cp">#endif</span>
+</code></pre></div></td></tr></tbody></table></div>
+<p>添加两行，改为：</p>
+<div class="highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">numpy.h</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span></pre></div></td><td class="code"><div><pre id="__code_10"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_10 &gt; code"></button><code tabindex="0"><span class="cp">#if defined(_MSC_VER)</span>
+<span class="cp">#  pragma warning(push)</span>
+<span class="cp">#  pragma warning(disable: 4127) </span><span class="c1">// warning C4127: Conditional expression is constant</span>
+<span class="hll"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;BaseTsd.h&gt;</span>
+</span><span class="hll"><span class="k">typedef</span><span class="w"> </span><span class="n">SSIZE_T</span><span class="w"> </span><span class="kt">ssize_t</span><span class="p">;</span>
+</span><span class="cp">#endif</span>
+</code></pre></div></td></tr></tbody></table></div>
+<h3 id="_6">开始构建<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_6" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre id="__code_11"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_11 &gt; code"></button><code tabindex="0"><span class="k">mkdir</span> build
+<span class="k">cd</span> build
+cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1 -DCUDAToolkit_ROOT=<span class="nv">%NVCC_PATH%</span>
+</code></pre></div>
+<p>其中 <code class="highlight"><span class="nv">%NVCC_PATH%</span></code> 是你在之前获取的路径，例如 <code>I:\ProgramData\Anaconda3\envs\dlib_build_test\bin\nvcc.exe</code>。</p>
+<p>基于我们做好的前期铺垫，理论上这里可以一次性构建成功，如果构建仍然没有成功，请仔细阅读 <code>CMakeError.log</code> 文件，分析其中出现的错误。在每次重新构建之前，请先删除 <code>build</code> 文件夹里的所有内容。</p>
+<h3 id="_7">尝试编译<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_7" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre id="__code_12"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_12 &gt; code"></button><code>cmake --build .
+</code></pre></div>
+<p>同上，理论上是一次性构建成功。</p>
+<h3 id="_8">尝试安装<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_8" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre id="__code_13"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_13 &gt; code"></button><code>python setup.py install --set DLIB_USE_CUDA=1 --no DLIB_GIF_SUPPORT
+</code></pre></div>
+<div class="admonition 危险 danger">
+<p class="admonition-title">危险</p>
+<p>必须添加 <code>--no DLIB_GIF_SUPPORT</code> 参数，否则会发生错误：<code>error C2734: “GifAsciiTable8x8”: 如果不是外部的，则必须初始化常量对象</code></p>
+<p>见 <a href="https://github.com/davisking/dlib/issues/2358">Dlib install errors out : error C2734: 'GifAsciiTable8x8' : 'const' object must be initialized if not 'extern' · Issue #2358 · davisking/dlib</a></p>
+<p>实际上，在非手动编译环境中（例如直接使用 <code>pip install</code>）安装时，也可以通过以下方式指定该参数：</p>
+<div class="highlight"><pre id="__code_14"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_14 &gt; code"></button><code>pip install -v --install-option=<span class="s2">"--no"</span> --install-option=<span class="s2">"DLIB_GIF_SUPPORT"</span> dlib
+</code></pre></div>
+<p>以及如果你想编译出 <code>.whl</code> 文件造福他人，在编译时同样需要加入该参数，即：</p>
+<div class="highlight"><pre id="__code_15"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_15 &gt; code"></button><code>python setup.py bdist_wheel --set DLIB_USE_CUDA=1 --no DLIB_GIF_SUPPORT
+</code></pre></div>
+</div>
+<h3 id="_9">在安装之后<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_9" title="Permanent link">¶</a></h3>
+<h4 id="dlib_2">卸载旧版本的 dlib<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#dlib_2" title="Permanent link">¶</a></h4>
+<p>就算在上一步的 <code>python setup.py install</code> 没有任何报错，我们的 dlib 也<strong>可能</strong>还没有正确安装。</p>
+<p>对于一些用户，他们可能是属于<em>中途</em>加入这个方案的。例如，他们在此之前已经从</p>
+<div class="highlight"><pre id="__code_16"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_16 &gt; code"></button><code>conda install -c conda-forge dlib 
+</code></pre></div>
+<p>安装了不带 CUDA 的 dlib。</p>
+<p>因为版本原因（Release 下载的是 <code>19.23</code> 版本，而 <code>conda install</code> 安装的是 <code>19.23.1</code> 版本），旧版本的 dlib 不会被使用，因此 <code class="highlight"><span class="n">dlib</span><span class="o">.</span><span class="n">DLIB_USE_CUDA</span></code> 的值将仍然是 <code class="highlight"><span class="kc">False</span></code>。</p>
+<p>此时卸载原来安装的 <code>dlib</code></p>
+<div class="highlight"><pre id="__code_17"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_17 &gt; code"></button><code>conda remove dlib
+</code></pre></div>
+<p>然后再进行一次上一步的安装操作</p>
+<div class="highlight"><pre id="__code_18"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_18 &gt; code"></button><code>python setup.py install --set DLIB_USE_CUDA=1 --no DLIB_GIF_SUPPORT
+</code></pre></div>
+<p>现在 <code class="highlight"><span class="n">dlib</span><span class="o">.</span><span class="n">DLIB_USE_CUDA</span></code> 的值应当是 <code class="highlight"><span class="kc">True</span></code></p>
+<h4 id="windows">关闭 Windows 错误报告服务<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#windows" title="Permanent link">¶</a></h4>
+<p>这是一个比较玄学的东西。在启用了 CUDA 的 dlib 正确安装完成后，有些人在运行的时候可能会发生这个错误。具体体现如下：</p>
+<p>这里有两份差不多的人脸检测 demo，其中一个使用 HOG，另一个使用 CNN。</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2" style="--md-indicator-x: 0px; --md-indicator-width: 70px;"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"><input id="__tabbed_1_2" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="__tabbed_1_1">HOG</label><label for="__tabbed_1_2">CNN</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">detection.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre id="__code_19"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_19 &gt; code"></button><code><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">imutils</span>
+<span class="kn">import</span> <span class="nn">dlib</span>
+
+<span class="hll"><span class="n">detector</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">get_frontal_face_detector</span><span class="p">()</span>
+</span><span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">'image/test.jpg'</span><span class="p">)</span>
+<span class="n">resized_image</span> <span class="o">=</span> <span class="n">imutils</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">resized_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">detector</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</code></pre></div></td></tr></tbody></table></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><table class="highlighttable"><tbody><tr><th colspan="2" class="filename"><span class="filename">detection.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span></pre></div></td><td class="code"><div><pre id="__code_20"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_20 &gt; code"></button><code><span class="kn">import</span> <span class="nn">cv2</span>
+<span class="kn">import</span> <span class="nn">imutils</span>
+<span class="kn">import</span> <span class="nn">dlib</span>
+
+<span class="hll"><span class="n">detector</span> <span class="o">=</span> <span class="n">dlib</span><span class="o">.</span><span class="n">cnn_face_detection_model_v1</span><span class="p">(</span><span class="s1">'model/mmod_human_face_detector.dat'</span><span class="p">)</span>
+</span><span class="n">image</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">'image/test.jpg'</span><span class="p">)</span>
+<span class="n">resized_image</span> <span class="o">=</span> <span class="n">imutils</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="n">rgb</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">resized_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2RGB</span><span class="p">)</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">detector</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">rect</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">confidence</span><span class="p">)</span>
+</code></pre></div></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="tabbed-control tabbed-control--prev" hidden=""><button class="tabbed-button" tabindex="-1" aria-hidden="true"></button></div><div class="tabbed-control tabbed-control--next" hidden=""><button class="tabbed-button" tabindex="-1" aria-hidden="true"></button></div></div>
+<p>当 dlib 使用 <code class="highlight"><span class="n">get_frontal_face_detector</span><span class="p">()</span></code>（HOG）进行人脸检测时，不会发生任何问题。</p>
+<p>当 dlib 使用 <code class="highlight"><span class="n">cnn_face_detection_model_v1</span><span class="p">()</span></code>（CNN）进行人脸检测时，能顺利进行检测，任务管理器的 CUDA 使用率也会正常上涨。</p>
+<p>但是在检测结束之后，这个脚本会卡住，打开任务管理器可以发现 C 盘使用率接近 100%。大约 1~2 分钟后 C 盘使用率恢复正常，脚本也正常结束。</p>
+<p>事后调查发现，是 <code>Windows 错误报告</code> 正在向 C 盘写入大量内容（内存转储），写入的位置是 <code>C:\Users\AkibaArisa\AppData\Local\CrashDumps</code>，每次写入一个大小约为 1 GB 的 <code>.dmp</code> 文件，文件名与 python 有关。</p>
+<p>实际上我们的 python 脚本并没有发生任何崩溃，而且也是正常结束的，因此这个错误报告纯属画蛇添足。</p>
+<p>现在关闭掉 <code>Windows 错误报告服务</code>：</p>
+<ol>
+<li>
+<p>首先使用 PowerShell 停用：</p>
+<p>（见 <a href="https://docs.microsoft.com/en-us/locale/?target=https://docs.microsoft.com/en-us/powershell/module/windowserrorreporting/disable-windowserrorreporting?view=windowsserver2022-ps&amp;viewFallbackFrom=win10-ps">Disable-WindowsErrorReporting (WindowsErrorReporting) | Microsoft Docs</a> ）    </p>
+<div class="highlight"><pre id="__code_21"><span></span><button class="md-clipboard md-icon" title="复制" data-clipboard-target="#__code_21 &gt; code"></button><code><span class="nb">PS </span><span class="n">C</span><span class="p">:\&gt;</span> <span class="nb">Disable-WindowsErrorReporting</span>
+<span class="c"># False</span>
+</code></pre></div>
+</li>
+<li>
+<p>然后在服务中停用：</p>
+<ol>
+<li>打开 <code>服务</code>（运行 <code>services.msc</code> 或者使用任务管理器）。</li>
+<li>找到 <code>Windows Error Reporting Service</code>，右键 <code>属性</code>。</li>
+<li>将 <code>启动类型</code> 设为 <code>禁用</code>。</li>
+<li>在 <code>服务状态</code> 处点击 <code>停止</code>。</li>
+</ol>
+</li>
+</ol>
+<p>如此一来，Windows 将不会再产生错误报告，我们使用了 <code class="highlight"><span class="n">cnn_face_detection_model_v1</span><span class="p">()</span></code> 的 python 脚本也将在检测完成后正常结束，不会一直搁这卡着。</p>
+<h2 id="_10">结论<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_10" title="Permanent link">¶</a></h2>
+<p>特定的 CUDA + Visual Studio + dlib + python 版本的组合目前仍然是 dlib 中的一大难题。如你所见，这个方案的阅读加实践的总时长可能超过了半个小时，奈何不同软件，不同平台之间的配套的确很困难，但我们仍将解决他们。相信这个方案可以帮助到更多的人。</p>
+<h2 id="_11">致谢<a class="headerlink" href="https://blog.arisa.moe/blog/2022/220429-dilb-ultimate-solution/#_11" title="Permanent link">¶</a></h2>
+<p>感谢 dlib 的所有贡献者为我们带来了实用的机器学习工具；感谢所有在 GitHub dlib 仓库下提出和解决 issue 的开发者和研究人员，没有他们这篇文章将无从下手；也感谢我的毕设老师，选了一个这样的课题，把我憋出了一篇这样的文章。</p>
+
+    <!-- Last update of source file -->
+    
+        
+            <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2022-05-04 18:11:14</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2022-04-29 06:47:56</span>
+      
+    
+  </small>
+</div>
+        
+    
+
+    
+
+        <!-- Giscus -->
+        <h2 id="__comments">评论</h2>
+        <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/client.js.下载" data-repo="zhanbao2000/blog" data-repo-id="R_kgDOHIZK7A" data-category="Announcements" data-category-id="DIC_kwDOHIZK7M4COdSe" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous" async="">
+        </script><div class="giscus"><iframe class="giscus-frame" title="Comments" scrolling="no" allow="clipboard-write" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/widget.html" loading="lazy" style="" data-ruffle-polyfilled=""></iframe></div>
+
+        <!-- Reload on palette change -->
+        <script>
+            const palette = __md_get("__palette");
+            if (palette && typeof palette.color === "object")
+                if (palette.color.scheme === "slate") {
+                    const giscus = document.querySelector("script[src*=giscus]");
+                    giscus.setAttribute("data-theme", "dark")
+                }
+
+            /* Register event handlers after documented loaded */
+            document.addEventListener("DOMContentLoaded", function() {
+                const ref = document.querySelector("[data-md-component=palette]");
+                ref.addEventListener("change", function() {
+                    const palette = __md_get("__palette");
+                    if (palette && typeof palette.color === "object") {
+                        const theme = palette.color.scheme === "slate" ? "dark" : "light";
+
+                        /* Instruct Giscus to change theme */
+                        const frame = document.querySelector(".giscus-frame");
+                        frame.contentWindow.postMessage(
+                            { giscus: { setConfig: { theme } } },
+                            "https://giscus.app"
+                        )
+                    }
+                })
+            })
+        </script>
+
+    
+
+
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" style="top: 74px;" hidden="" tabindex="-1">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"></path></svg>
+            回到页面顶部
+          </button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="https://blog.arisa.moe/blog/2022/220428-how-to-ask-questions-like-a-retard/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 如何像一个弱智一样提问" rel="prev">
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                如何像一个弱智一样提问
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="https://blog.arisa.moe/blog/2022/220502-how-dogs-work-in-epic7/" class="md-footer__link md-footer__link--next" aria-label="下一页: 第七史诗升六星的正确理解" rel="next">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                第七史诗升六星的正确理解
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2077 Akiba Arisa <a href="https://icp.gov.moe/?keyword=20232033" target="_blank">萌ICP备20232033号</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/zhanbao2000" target="_blank" rel="noopener" title="AkibaArisa on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+    <a href="https://steamcommunity.com/id/akibaarisa" target="_blank" rel="noopener" title="AkibaArisa on Steam" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M496 256c0 137-111.2 248-248.4 248-113.8 0-209.6-76.3-239-180.4l95.2 39.3c6.4 32.1 34.9 56.4 68.9 56.4 39.2 0 71.9-32.4 70.2-73.5l84.5-60.2c52.1 1.3 95.8-40.9 95.8-93.5 0-51.6-42-93.5-93.7-93.5s-93.7 42-93.7 93.5v1.2L176.6 279c-15.5-.9-30.7 3.4-43.5 12.1L0 236.1C10.2 108.4 117.1 8 247.6 8 384.8 8 496 119 496 256zM155.7 384.3l-30.5-12.6a52.79 52.79 0 0 0 27.2 25.8c26.9 11.2 57.8-1.6 69-28.4 5.4-13 5.5-27.3.1-40.3-5.4-13-15.5-23.2-28.5-28.6-12.9-5.4-26.7-5.2-38.9-.6l31.5 13c19.8 8.2 29.2 30.9 20.9 50.7-8.3 19.9-31 29.2-50.8 21zm173.8-129.9c-34.4 0-62.4-28-62.4-62.3s28-62.3 62.4-62.3 62.4 28 62.4 62.3-27.9 62.3-62.4 62.3zm.1-15.6c25.9 0 46.9-21 46.9-46.8 0-25.9-21-46.8-46.9-46.8s-46.9 21-46.9 46.8c.1 25.8 21.1 46.8 46.9 46.8z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.footer", "navigation.tabs", "navigation.top", "navigation.tracking", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.74e28a9f.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/bundle.220ee61c.min.js.下载"></script>
+      
+        
+          <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/mathjax.js.下载"></script>
+        
+      
+        
+          <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/polyfill.min.js.下载"></script>
+        
+      
+        
+          <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/tex-mml-chtml.js.下载"></script>
+        
+      
+        
+          <script src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/autoload.js.下载"></script>
+        
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": false, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script><script defer="" src="./基于 Anaconda 的 dlib（CUDA 版本）安装的终极解决方案 - Arisa _ Blog_files/v2cb3a2ab87c5498db5ce7e6608cf55231689030342039" integrity="sha512-DI3rPuZDcpH/mSGyN22erN5QFnhl760f50/te7FTIYxodEF8jJnSFnfnmG/c+osmIQemvUrnBtxnMpNdzvx1/g==" data-cf-beacon="{&quot;rayId&quot;:&quot;7e99902db840109e&quot;,&quot;version&quot;:&quot;2023.4.0&quot;,&quot;r&quot;:1,&quot;token&quot;:&quot;b82341023a0f4211aee6c75ea084404f&quot;,&quot;si&quot;:100}" crossorigin="anonymous"></script>
+
+<div id="waifu-toggle">
+            <span>看板娘</span>
+        </div><div id="waifu" style="bottom: 0px;">
+            <div id="waifu-tips" class="">去 <span>安装 CUDA 和 cuDNN</span> 逛逛吧。</div>
+            <canvas id="live2d" width="800" height="800"></canvas>
+            <div id="waifu-tool"><span id="waifu-tool-hitokoto"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M512 240c0 114.9-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6C73.6 471.1 44.7 480 16 480c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4l0 0 0 0 0 0 0 0 .3-.3c.3-.3 .7-.7 1.3-1.4c1.1-1.2 2.8-3.1 4.9-5.7c4.1-5 9.6-12.4 15.2-21.6c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208z"></path></svg></span><span id="waifu-tool-asteroids"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M498.1 5.6c10.1 7 15.4 19.1 13.5 31.2l-64 416c-1.5 9.7-7.4 18.2-16 23s-18.9 5.4-28 1.6L277.3 424.9l-40.1 74.5c-5.2 9.7-16.3 14.6-27 11.9S192 499 192 488V392c0-5.3 1.8-10.5 5.1-14.7L362.4 164.7c2.5-7.1-6.5-14.3-13-8.4L170.4 318.2l-32 28.9 0 0c-9.2 8.3-22.3 10.6-33.8 5.8l-85-35.4C8.4 312.8 .8 302.2 .1 290s5.5-23.7 16.1-29.8l448-256c10.7-6.1 23.9-5.5 34 1.4z"></path></svg></span><span id="waifu-tool-switch-model"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM512 256c0 141.4-114.6 256-256 256S0 397.4 0 256S114.6 0 256 0S512 114.6 512 256zM256 272c39.8 0 72-32.2 72-72s-32.2-72-72-72s-72 32.2-72 72s32.2 72 72 72z"></path></svg></span><span id="waifu-tool-switch-texture"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M320 64c0-35.3-28.7-64-64-64s-64 28.7-64 64s28.7 64 64 64s64-28.7 64-64zm-96 96c-35.3 0-64 28.7-64 64v48c0 17.7 14.3 32 32 32h1.8l11.1 99.5c1.8 16.2 15.5 28.5 31.8 28.5h38.7c16.3 0 30-12.3 31.8-28.5L318.2 304H320c17.7 0 32-14.3 32-32V224c0-35.3-28.7-64-64-64H224zM132.3 394.2c13-2.4 21.7-14.9 19.3-27.9s-14.9-21.7-27.9-19.3c-32.4 5.9-60.9 14.2-82 24.8c-10.5 5.3-20.3 11.7-27.8 19.6C6.4 399.5 0 410.5 0 424c0 21.4 15.5 36.1 29.1 45c14.7 9.6 34.3 17.3 56.4 23.4C130.2 504.7 190.4 512 256 512s125.8-7.3 170.4-19.6c22.1-6.1 41.8-13.8 56.4-23.4c13.7-8.9 29.1-23.6 29.1-45c0-13.5-6.4-24.5-14-32.6c-7.5-7.9-17.3-14.3-27.8-19.6c-21-10.6-49.5-18.9-82-24.8c-13-2.4-25.5 6.3-27.9 19.3s6.3 25.5 19.3 27.9c30.2 5.5 53.7 12.8 69 20.5c3.2 1.6 5.8 3.1 7.9 4.5c3.6 2.4 3.6 7.2 0 9.6c-8.8 5.7-23.1 11.8-43 17.3C374.3 457 318.5 464 256 464s-118.3-7-157.7-17.9c-19.9-5.5-34.2-11.6-43-17.3c-3.6-2.4-3.6-7.2 0-9.6c2.1-1.4 4.8-2.9 7.9-4.5c15.3-7.7 38.8-14.9 69-20.5z"></path></svg></span><span id="waifu-tool-photo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M220.6 121.2L271.1 96 448 96v96H333.2c-21.9-15.1-48.5-24-77.2-24s-55.2 8.9-77.2 24H64V128H192c9.9 0 19.7-2.3 28.6-6.8zM0 128V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H271.1c-9.9 0-19.7 2.3-28.6 6.8L192 64H160V48c0-8.8-7.2-16-16-16H80c-8.8 0-16 7.2-16 16l0 16C28.7 64 0 92.7 0 128zM344 304c0 48.6-39.4 88-88 88s-88-39.4-88-88s39.4-88 88-88s88 39.4 88 88z"></path></svg></span><span id="waifu-tool-info"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M256 512c141.4 0 256-114.6 256-256S397.4 0 256 0S0 114.6 0 256S114.6 512 256 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-144c-17.7 0-32-14.3-32-32s14.3-32 32-32s32 14.3 32 32s-14.3 32-32 32z"></path></svg></span><span id="waifu-tool-quit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"></path></svg></span></div>
+        </div></body></html>

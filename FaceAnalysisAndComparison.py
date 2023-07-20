@@ -1,15 +1,9 @@
 import sys
-
 import dlib
 import cv2
 import os
 import numpy as np
 import ffmpeg
-
-
-def convert_video(input_file, output_file):
-    ffmpeg.input(input_file).output(output_file, r=target_fps, y='-y').run()
-
 
 # 加载人脸检测器和人脸关键点检测器
 detector = dlib.get_frontal_face_detector()
@@ -30,7 +24,12 @@ face_descriptors = []
 frame_count = 0
 unique_face = 0
 
+
 # 更改帧率并处理视频文件
+def convert_video(input_file, output_file):
+    ffmpeg.input(input_file).output(output_file, r=target_fps, y='-y').run()
+
+
 target_fps = 5
 temp_video_path = "output/temp/temp_video.mp4"
 os.makedirs("output/temp", exist_ok=True)
@@ -47,16 +46,13 @@ while True:
     if not ret:
         break
 
-    # 将帧转换为灰度图像
-    gray_img = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
     # 检测人脸
-    faces = detector(gray_img)  # 上采样1次，对画面中较小人脸检测更友好，但计算时间也会增加。可调，例如:faces = detector(gray_img, 1)
+    faces = detector(frame)  # 上采样1次，对画面中较小人脸检测更友好，但计算时间也会增加。可调，例如:faces = detector(gray_img, 1)
 
     # 对每个检测到的人脸进行处理
     for face in faces:
         # 提取人脸关键点
-        shape = predictor(gray_img, face)
+        shape = predictor(frame, face)
 
         # 获取关键点坐标
         shape_points = []
@@ -101,26 +97,35 @@ while True:
         w = min(w, frame_width - x)
         h = min(h, frame_height - y)
 
+        # 截取
         aligned_face = aligned_face[y:y + h, x:x + w]
 
-        RGB_img = cv2.cvtColor(aligned_face, cv2.COLOR_BGR2RGB)
+        # 将OpenCV默认存储的 BGR 通道顺序转换为 RGB
+        RGB_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性。而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加。
+        # 得到人脸的 128D 数据
+        # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性；而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加
         face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=3))
 
+        # 存储第一张人脸的数据，输出人脸图片，然后对比下一张人脸
         if len(face_descriptors) == 0:
             face_descriptors.append(face_descriptor)
+            output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
+            cv2.imwrite(output_path, aligned_face)
+            unique_face += 1
+            continue
 
+        # 测试是否有相同人脸
         is_unique = True
-
         for i in range(0, len(face_descriptors)):
             distance = np.linalg.norm(face_descriptor - face_descriptors[i])
-            if distance < 0.50:
+            print(distance)
+            if distance < 0.6:
                 is_unique = False
                 break
 
         if is_unique:
-            # 将人脸特征向量添加到列表中，同时记录人脸对应的视频帧
+            # 将人脸特征向量添加到列表中
             face_descriptors.append(face_descriptor)
             # 保存帧
             output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
@@ -131,6 +136,8 @@ while True:
 
 # 释放视频文件
 cap.release()
+
+print(face_descriptors)
 
 print("不同的人脸图像保存完成！")
 
