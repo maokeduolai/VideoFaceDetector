@@ -103,29 +103,29 @@ while True:
 
         aligned_face = aligned_face[y:y + h, x:x + w]
 
-        output_path = os.path.join(output_dir, f"unique_face_{frame_count}.png")
-        cv2.imwrite(output_path, aligned_face)
+        RGB_img = cv2.cvtColor(aligned_face, cv2.COLOR_BGR2RGB)
 
-        RGB_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        face_descriptor = face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=1)
-        face_descriptor = np.array(face_descriptor)
+        # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性。而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加。
+        face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=3))
 
         if len(face_descriptors) == 0:
             face_descriptors.append(face_descriptor)
 
-        while len(face_descriptors) != 0:
-            for i in range(0, len(face_descriptors)):
-                distance = np.linalg.norm(face_descriptor - face_descriptors[i])
-                if distance >= 0.4:
-                    # 将人脸特征向量添加到列表中，同时记录人脸对应的视频
-                    # 帧
-                    face_descriptors.append(face_descriptor)
-                    # # 保存帧
-                    # output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
-                    # cv2.imwrite(output_path, frame)
-                    unique_face += 1
-                    break
-            break
+        is_unique = True
+
+        for i in range(0, len(face_descriptors)):
+            distance = np.linalg.norm(face_descriptor - face_descriptors[i])
+            if distance < 0.50:
+                is_unique = False
+                break
+
+        if is_unique:
+            # 将人脸特征向量添加到列表中，同时记录人脸对应的视频帧
+            face_descriptors.append(face_descriptor)
+            # 保存帧
+            output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
+            cv2.imwrite(output_path, aligned_face)
+            unique_face += 1
 
     frame_count += 1
 
