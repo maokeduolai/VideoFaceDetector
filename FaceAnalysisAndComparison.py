@@ -1,16 +1,23 @@
+import sys
+
 import dlib
 import cv2
 import os
 import numpy as np
+import ffmpeg
+
+
+def convert_video(input_file, output_file):
+    ffmpeg.input(input_file).output(output_file, r=target_fps, y='-y').run()
+
 
 # 加载人脸检测器和人脸关键点检测器
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("source/model/shape_predictor_68_face_landmarks.dat")
 face_recognizer = dlib.face_recognition_model_v1("source/model/dlib_face_recognition_resnet_model_v1.dat")
 
-# 加载视频文件
-video_path = "source/video/01_Test_Video.mp4"
-cap = cv2.VideoCapture(video_path)
+# 加载原视频
+video_path = "data/video/02_Test_Video.mp4"
 
 # 创建保存人脸图像的目录
 output_dir = "output/face"
@@ -22,6 +29,15 @@ face_descriptors = []
 # 初始化帧计数器与人脸计数器
 frame_count = 0
 unique_face = 0
+
+# 更改帧率并处理视频文件
+target_fps = 5
+temp_video_path = "output/temp/temp_video.mp4"
+os.makedirs("output/temp", exist_ok=True)
+convert_video(video_path, temp_video_path)
+
+# 加载处理后的视频
+cap = cv2.VideoCapture(temp_video_path)
 
 while True:
     print(frame_count)
@@ -60,8 +76,8 @@ while True:
         angle = np.degrees(np.arctan2(shape_points[45][1] - shape_points[36][1],
                                       shape_points[45][0] - shape_points[36][0])) * 1.0  # 乘1.0转换数据类型为float
         scale = np.sqrt((desired_face_width ** 2 + desired_face_height ** 2) / (
-                    (shape_points[45][0] - shape_points[36][0]) ** 2 + (
-                        shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
+                (shape_points[45][0] - shape_points[36][0]) ** 2 + (
+                    shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
 
         # 构建仿射变换矩阵
         M = cv2.getRotationMatrix2D(eyes_center, angle, scale)
@@ -117,3 +133,6 @@ while True:
 cap.release()
 
 print("不同的人脸图像保存完成！")
+
+# 退出程序
+sys.exit()
