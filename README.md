@@ -6,11 +6,12 @@
 
 - 从一个或一组视频中导出该视频内出现的所有人脸
 
-- 选取一个或多个人脸显示对应视频
+- 选取一个或多个人脸显示对应视频列表
 
-- 导出人物与视频的对应列表
+- 选取一个或多个人脸自动给视频分类
 
 ## 安装和运行
+
 **注意：本程序适合在有 NVIDIA GPU 的计算机上运行**
 
 - Python版本要求：3.10.12
@@ -83,3 +84,5 @@
 - [OpenCV官方文档](https://docs.opencv.org/)
 - [NumPy官方文档](https://numpy.org/doc/)
 - [FFmpeg官方文档](https://ffmpeg.org/documentation.html)
+- 所有的图标来源于：<a href="https://www.flaticon.com" title="export icons">Icons created by
+  Freepik</a>
