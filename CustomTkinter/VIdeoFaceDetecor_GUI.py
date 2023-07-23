@@ -1,9 +1,10 @@
 import tkinter
+import tkinter.filedialog as filedialog
 import os
 import customtkinter
 from PIL import Image
 
-customtkinter.set_appearance_mode("Da")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_appearance_mode("Light")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
 
 
@@ -28,7 +29,7 @@ class App(customtkinter.CTk):
                                                  size=(26, 26))
         self.export_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "export.png")),
                                                    size=(26, 26))
-        self.large_logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "VFD_Logo.png")),
+        self.large_logo_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "export.png")),
                                                        size=(305, 128))
 
         # 创建导航框架
@@ -94,7 +95,25 @@ class App(customtkinter.CTk):
         self.info_frame_large_logo_label = customtkinter.CTkLabel(self.info_frame,
                                                                   text="",
                                                                   image=self.large_logo_image)
-        self.info_frame_large_logo_label.grid(row=2, column=1, padx=20, pady=10)
+        self.info_frame_large_logo_label.grid(row=0, column=0, padx=20, pady=10)
+
+        # 选择文件或文件夹
+        file_path = None
+        folder_path = None
+
+        def select_file():
+            file_path = filedialog.askopenfilename()
+            print("Selected file:", file_path)
+
+        def select_folder():
+            folder_path = filedialog.askdirectory()
+            print("Selected folder:", folder_path)
+
+        self.file_button = customtkinter.CTkButton(self.info_frame, text="Select File", command=select_file)
+        self.file_button.grid(row=1, column=0, padx=20, pady=10)
+
+        self.folder_button = customtkinter.CTkButton(self.info_frame, text="Select Folder", command=select_folder)
+        self.folder_button.grid(row=2, column=0, padx=20, pady=10)
 
 
 # command=self.home_button_event
