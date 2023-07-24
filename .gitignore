@@ -11,3 +11,6 @@
 
 # 排除输出文件夹
 output/
+
+# 排除 __pycache__ 文件夹
+__pycache__/
