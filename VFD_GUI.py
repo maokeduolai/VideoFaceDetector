@@ -1,8 +1,8 @@
 import os
-import sys
 import shutil
+import sys
 
-from PyQt5.QtGui import QTextCursor, QPixmap, QIcon
+from PyQt5.QtGui import QTextCursor, QPixmap, QIcon, QTextTableFormat
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
     QFileDialog, QTextEdit
 
@@ -75,9 +75,6 @@ class MainWindow(QMainWindow):
         person_list_layout = QVBoxLayout()
         self.person_list_textedit = QTextEdit()
         person_list_layout.addWidget(self.person_list_textedit)
-        export_button = QPushButton("导出")
-        export_button.clicked.connect(self.export_person_list)
-        person_list_layout.addWidget(export_button)
         self.person_list_widget.setLayout(person_list_layout)
         self.load_images()
 
@@ -102,11 +99,13 @@ class MainWindow(QMainWindow):
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
 
+    # 创建按钮函数
     def create_nav_button(self, text, callback):
         button = QPushButton(text)
         button.clicked.connect(callback)
         return button
 
+    # 定义每个页面的显示内容
     def show_basic_info(self):
         self.basic_info_widget.show()
         self.person_list_widget.hide()
@@ -122,21 +121,58 @@ class MainWindow(QMainWindow):
         self.person_list_widget.hide()
         self.export_widget.show()
 
+    # 载入临时文件夹中的所有图像
     def load_images(self):
         # 创建保存人脸图像的目录
         output_dir = "output/face"
         os.makedirs(output_dir, exist_ok=True)
 
+        # 创建一个对象，用于操作 QTextEdit 的区域
         cursor = QTextCursor(self.person_list_textedit.document())
+
+        # 设置并排图片的列数
+        num_columns = 3
+
+        # 计数器，用于确定何时插入新行
+        counter = 0
+
+        # 创建表格格式
+        table_format = QTextTableFormat()
+        table_format.setCellPadding(2)
+        table_format.setCellSpacing(0)
+        table_format.setBorder(0)
+
+        table = cursor.insertTable(1, num_columns, table_format)
 
         for file_name in os.listdir(output_dir):
             if file_name.endswith(".png"):
                 image_path = os.path.join(output_dir, file_name)
                 pixmap = QPixmap(image_path)
                 scaled_pixmap = pixmap.scaledToWidth(200)  # 调整图片宽度
-                cursor.insertImage(scaled_pixmap.toImage(), file_name)
-                cursor.insertText("\n")  # 插入换行符
 
+                # 将 QPixmap 转换为 QImage
+                image = scaled_pixmap.toImage()
+
+                # 在当前单元格中插入图片
+                cell_cursor = table.cellAt(0, counter).firstCursorPosition()
+                cell_cursor.insertImage(image)
+
+                # 在当前单元格中插入文件名
+                cell_cursor.insertText("\n")
+                cell_cursor.insertText(file_name)
+
+                # 在文件名下方插入换行符
+                cell_cursor.insertText("\n")
+
+                # 更新计数器
+                counter += 1
+
+                # 插入新行
+                if counter == num_columns:
+                    table.appendRows(1)
+                    counter = 0
+
+    # 选择文件的方法
     def select_file_path(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "选择文件路径")
         self.file_path_label.setText(file_path)
@@ -144,35 +180,23 @@ class MainWindow(QMainWindow):
         update_video_path(file_path)
         run_program()
 
-    def run_program_thread(self):
-        run_program()
-        self.operation_complete.emit()
-
+    # 选择文件夹的方法
     def select_folder_path(self):
         folder_path, _ = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
         self.file_path_label.setText(folder_path)
-        update_video_path(folder_path)
         process_directory_input()
 
-    def export_person_list(self):
-        # 在这里添加导出人物列表的逻辑
-        pass
-
+    # 导出人物与视频文件关联 txt 文件
     def export_files(self):
-        # 在这里添加导出文件的逻辑
-        pass
+        folder_path, _ = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
+
+        # 复制出文件
+        source_file = "output/face_list.txt"
+        destination_folder = folder_path
+        shutil.copy(source_file, destination_folder)
 
 
-if __name__ == "__main__":
-    folder_path = 'output'  # 替换为要删除的文件夹的路径
-    # 检查文件夹是否存在
-    if os.path.exists(folder_path):
-        # 删除文件夹及其内容
-        shutil.rmtree(folder_path)
-    else:
-        print("文件夹不存在，无需删除。")
-
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+sys.exit(app.exec_())

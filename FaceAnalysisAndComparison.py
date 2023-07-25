@@ -5,6 +5,7 @@ import cv2
 import dlib
 import ffmpeg
 import numpy as np
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QProgressBar, QApplication, QWidget, QVBoxLayout
 
 import GlobalVars
@@ -19,21 +20,44 @@ def update_video_path(new_path):
 
 
 def process_directory_input():
-    if os.path.isdir(video_path):
-        video_files = glob.glob(os.path.join(video_path, '*.mp4')) + glob.glob(
-            os.path.join(video_path, '*.avi')) + glob.glob(os.path.join(video_path, '*.mov')) + glob.glob(
-            os.path.join(video_path, '*.wmv'))
-        # 遍历所有视频文件，并更新处理的视频文件路径
-        if video_path:
-            for video_file in video_files:
-                update_video_path(video_file)
-                run_program()
+    # 选取所有的视频文件
+    video_files = glob.glob(os.path.join(video_path, '*.mp4')) + glob.glob(
+        os.path.join(video_path, '*.avi')) + glob.glob(os.path.join(video_path, '*.mov')) + glob.glob(
+        os.path.join(video_path, '*.wmv'))
+
+    # 遍历所有视频文件，并更新处理的视频文件路径
+    if video_path:
+        for video_file in video_files:
+            update_video_path(video_file)
+            run_program()
+
+    def append_to_file(file_path, content):
+        with open(file_path, 'a') as file:
+            file.write(content)
+
+        file_path = "output/face_list.txt"
+
+        try:
+            # 尝试打开文件
+            with open(file_path, "w") as file:
+                print(f"文件 '{file_path}' 创建成功！")
+        except Exception as e:
+            print(f"创建文件 '{file_path}' 失败：{str(e)}")
+
+    # 输出 face_list 数组的内容
+    for item in face_list:
+        # 追加内容到文件
+        append_to_file("output/face_list.txt", item)
 
 
 class ProgressBarWindow(QWidget):
     def __init__(self, total_frame):
         super().__init__()
         self.setWindowTitle("正在处理中...")
+
+        # 设置窗口图标
+        self.setWindowIcon(QIcon("images/VFD_Single_Logo.png"))
+
         self.layout = QVBoxLayout()
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, total_frame)
@@ -78,6 +102,7 @@ def run_program():
     # 读取处理后的视频帧数
     probe = ffmpeg.probe(temp_video_path)
     video_info = next(stream for stream in probe['streams'] if stream['codec_type'] == 'video')
+    video_filename = video_info.get('filename')
     GlobalVars.global_total_frame = int(video_info['nb_frames'])
 
     progress_window = ProgressBarWindow(GlobalVars.global_total_frame)
@@ -116,7 +141,7 @@ def run_program():
                 y = shape.part(n).y
                 shape_points.append((x, y))
 
-            # 定义目标对齐点坐标
+            # 定义目标尺寸
             desired_face_width = 1024
             desired_face_height = 1024
 
@@ -127,7 +152,7 @@ def run_program():
                                           shape_points[45][0] - shape_points[36][0])) * 1.0  # 乘1.0转换数据类型为float
             scale = np.sqrt((desired_face_width ** 2 + desired_face_height ** 2) / (
                     (shape_points[45][0] - shape_points[36][0]) ** 2 + (
-                    shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
+                        shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
 
             # 构建仿射变换矩阵
             M = cv2.getRotationMatrix2D(eyes_center, angle, scale)
@@ -159,7 +184,7 @@ def run_program():
 
             # 得到人脸的 128D 数据
             # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性；而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加
-            face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=3))
+            face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=2))
 
             # 创建保存人脸图像的目录
             output_dir = "output/face"
@@ -167,7 +192,7 @@ def run_program():
             # 存储第一张人脸的数据，输出人脸图片，然后对比下一张人脸
             if len(face_descriptors) == 0:
                 face_descriptors.append(face_descriptor)
-                output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
+                output_path = os.path.join(output_dir, f"Person_{unique_face}.png")
                 cv2.imwrite(output_path, aligned_face)
                 unique_face += 1
                 continue
@@ -185,23 +210,19 @@ def run_program():
                 # 将人脸特征向量添加到列表中
                 face_descriptors.append(face_descriptor)
                 # 保存帧
-                output_path = os.path.join(output_dir, f"unique_face_{unique_face}.png")
+                output_path = os.path.join(output_dir, f"Person_{unique_face}.png")
                 cv2.imwrite(output_path, aligned_face)
                 unique_face += 1
+
+            # 创建一个空的人脸ID数组
+            global face_list
+
+            # 添加人脸ID到数组
+            face_list = [f"Person_{unique_face} -> {video_filename}"]
 
             # 更新进度条
             progress_window.set_value(GlobalVars.global_current_frame)
             QApplication.processEvents()
-
-            def append_to_file(file_path, content):
-                with open(file_path, 'a') as file:
-                    file.write(content)
-
-            # 示例内容，你可以根据需要修改
-            additional_info = "Occupation: Software Engineer"
-
-            # 调用函数追加内容到文件
-            append_to_file("output/face.txt", additional_info)
 
         frame_count += 1
 
