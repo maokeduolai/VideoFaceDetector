@@ -1,11 +1,13 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
-    QFileDialog, QTextEdit
-from PyQt5.QtGui import QPixmap, QIcon
-import glob
 import os
+import sys
+import time
+
+from PyQt5.QtGui import QTextCursor, QPixmap, QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
+    QFileDialog, QTextEdit, QProgressBar
 
 from FaceAnalysisAndComparison import update_video_path, run_program, process_directory_input
+import GlobalVars
 
 
 class MainWindow(QMainWindow):
@@ -40,6 +42,12 @@ class MainWindow(QMainWindow):
         export_button.setIcon(QIcon("images/export.png"))
         export_button.clicked.connect(self.show_export)
 
+        # 设置按钮禁用条件
+        os.makedirs("output/face", exist_ok=True)
+        if len(os.listdir("output/face")) == 0:
+            person_list_button.setEnabled(False)
+            export_button.setEnabled(False)
+
         # 将按钮添加到导航栏中
         navigation_layout.addWidget(basic_info_button)
         navigation_layout.addWidget(person_list_button)
@@ -72,6 +80,7 @@ class MainWindow(QMainWindow):
         export_button.clicked.connect(self.export_person_list)
         person_list_layout.addWidget(export_button)
         self.person_list_widget.setLayout(person_list_layout)
+        self.load_images()
 
         # 创建分类导出页面
         self.export_widget = QWidget()
@@ -80,7 +89,6 @@ class MainWindow(QMainWindow):
         export_layout.addWidget(self.export_textedit)
         export_button = QPushButton("导出")
         export_button.clicked.connect(self.export_files)
-
         export_layout.addWidget(export_button)
         self.export_widget.setLayout(export_layout)
 
@@ -115,10 +123,25 @@ class MainWindow(QMainWindow):
         self.person_list_widget.hide()
         self.export_widget.show()
 
+    def load_images(self):
+        # 创建保存人脸图像的目录
+        output_dir = "output/face"
+        os.makedirs(output_dir, exist_ok=True)
+
+        cursor = QTextCursor(self.person_list_textedit.document())
+
+        for file_name in os.listdir(output_dir):
+            if file_name.endswith(".png"):
+                image_path = os.path.join(output_dir, file_name)
+                pixmap = QPixmap(image_path)
+                scaled_pixmap = pixmap.scaledToWidth(200)  # 调整图片宽度
+                cursor.insertImage(scaled_pixmap.toImage(), file_name)
+                cursor.insertText("\n")  # 插入换行符
+
     def select_file_path(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "选择文件路径")
         self.file_path_label.setText(file_path)
-        # 调用主程序的函数，将file_path传递给video_path
+        # 调用主程序的函数，将 file_path 传递给 video_path
         update_video_path(file_path)
         run_program()
 
@@ -127,6 +150,12 @@ class MainWindow(QMainWindow):
         self.file_path_label.setText(folder_path)
         update_video_path(folder_path)
         process_directory_input()
+
+    def update_progress(self, current_frame):
+        # 更新进度条的进度
+        self.progress_bar.setValue(current_frame)
+        time.sleep(1)
+        QApplication.processEvents()  # 实时刷新显示
 
     def export_person_list(self):
         # 在这里添加导出人物列表的逻辑
