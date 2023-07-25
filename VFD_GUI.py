@@ -1,13 +1,12 @@
 import os
 import sys
-import time
+import shutil
 
 from PyQt5.QtGui import QTextCursor, QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
-    QFileDialog, QTextEdit, QProgressBar
+    QFileDialog, QTextEdit
 
 from FaceAnalysisAndComparison import update_video_path, run_program, process_directory_input
-import GlobalVars
 
 
 class MainWindow(QMainWindow):
@@ -145,17 +144,15 @@ class MainWindow(QMainWindow):
         update_video_path(file_path)
         run_program()
 
+    def run_program_thread(self):
+        run_program()
+        self.operation_complete.emit()
+
     def select_folder_path(self):
         folder_path, _ = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
         self.file_path_label.setText(folder_path)
         update_video_path(folder_path)
         process_directory_input()
-
-    def update_progress(self, current_frame):
-        # 更新进度条的进度
-        self.progress_bar.setValue(current_frame)
-        time.sleep(1)
-        QApplication.processEvents()  # 实时刷新显示
 
     def export_person_list(self):
         # 在这里添加导出人物列表的逻辑
@@ -167,6 +164,14 @@ class MainWindow(QMainWindow):
 
 
 if __name__ == "__main__":
+    folder_path = 'output'  # 替换为要删除的文件夹的路径
+    # 检查文件夹是否存在
+    if os.path.exists(folder_path):
+        # 删除文件夹及其内容
+        shutil.rmtree(folder_path)
+    else:
+        print("文件夹不存在，无需删除。")
+
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
