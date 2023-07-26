@@ -2,9 +2,11 @@ import os
 import shutil
 import sys
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QTextCursor, QPixmap, QIcon, QTextTableFormat
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, \
     QFileDialog, QTextEdit
+from qt_material import apply_stylesheet
 
 from FaceAnalysisAndComparison import update_video_path, run_program, process_directory_input
 
@@ -12,6 +14,15 @@ from FaceAnalysisAndComparison import update_video_path, run_program, process_di
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
+        # 自定义字体
+        extra = {
+            # Font
+            'font_family': 'SimHei',
+        }
+
+        # 应用 QSS 样式
+        apply_stylesheet(app, theme='dark_lightgreen.xml', invert_secondary=True, extra=extra)
 
         # 设置窗口标题
         self.setWindowTitle("Video Face Detector")
@@ -236,6 +247,9 @@ if __name__ == "__main__":
         shutil.rmtree(export_folder_path)
     else:
         print("文件夹不存在，无需删除。")
+
+    # 设置根据屏幕DPI缩放
+    QApplication.setAttribute(Qt.AA_EnableHighDpiScaling)
 
     app = QApplication(sys.argv)
     window = MainWindow()

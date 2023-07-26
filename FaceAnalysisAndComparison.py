@@ -42,6 +42,7 @@ class ProgressBarWindow(QWidget):
         self.layout = QVBoxLayout()
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, total_frame)
+        self.progress_bar.setFormat("%p%")  # 设置进度条显示格式为百分比
         self.layout.addWidget(self.progress_bar)
         self.setLayout(self.layout)
 
