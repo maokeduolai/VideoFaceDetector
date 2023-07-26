@@ -143,7 +143,7 @@ def run_program():
                                           shape_points[45][0] - shape_points[36][0])) * 1.0  # 乘1.0转换数据类型为float
             scale = np.sqrt((desired_face_width ** 2 + desired_face_height ** 2) / (
                     (shape_points[45][0] - shape_points[36][0]) ** 2 + (
-                    shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
+                        shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
 
             # 构建仿射变换矩阵
             M = cv2.getRotationMatrix2D(eyes_center, angle, scale)
@@ -174,7 +174,7 @@ def run_program():
             RGB_img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             # 得到人脸的 128D 数据
-            # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性；而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加
+            # 较小的 num_jitters 值可以提供较快地计算速度，但可能会降低准确性；而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加
             face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=2))
 
             output_dir = "output/face"
