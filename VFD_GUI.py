@@ -32,25 +32,25 @@ class MainWindow(QMainWindow):
         basic_info_button.clicked.connect(self.show_basic_info)
 
         # 创建人物列表按钮
-        person_list_button = QPushButton("人物列表")
-        person_list_button.setIcon(QIcon("images/face-detection.png"))
-        person_list_button.clicked.connect(self.show_person_list)
+        self.person_list_button = QPushButton("人物列表")
+        self.person_list_button.setIcon(QIcon("images/face-detection.png"))
+        self.person_list_button.clicked.connect(self.show_person_list)
 
         # 创建分类导出按钮
-        export_button = QPushButton("分类导出")
-        export_button.setIcon(QIcon("images/export.png"))
-        export_button.clicked.connect(self.show_export)
+        self.export_button = QPushButton("分类导出")
+        self.export_button.setIcon(QIcon("images/export.png"))
+        self.export_button.clicked.connect(self.show_export)
 
         # 设置按钮禁用条件
         os.makedirs("output/face", exist_ok=True)
         if len(os.listdir("output/face")) == 0:
-            person_list_button.setEnabled(False)
-            export_button.setEnabled(False)
+            self.person_list_button.setEnabled(False)
+            self.export_button.setEnabled(False)
 
         # 将按钮添加到导航栏中
         navigation_layout.addWidget(basic_info_button)
-        navigation_layout.addWidget(person_list_button)
-        navigation_layout.addWidget(export_button)
+        navigation_layout.addWidget(self.person_list_button)
+        navigation_layout.addWidget(self.export_button)
 
         # 创建基本信息页面
         self.basic_info_widget = QWidget()
@@ -76,7 +76,6 @@ class MainWindow(QMainWindow):
         self.person_list_textedit = QTextEdit()
         person_list_layout.addWidget(self.person_list_textedit)
         self.person_list_widget.setLayout(person_list_layout)
-        self.load_images()
 
         # 创建分类导出页面
         self.export_widget = QWidget()
@@ -144,6 +143,7 @@ class MainWindow(QMainWindow):
 
         table = cursor.insertTable(1, num_columns, table_format)
 
+        # 显示每一张脸
         for file_name in os.listdir(output_dir):
             if file_name.endswith(".png"):
                 image_path = os.path.join(output_dir, file_name)
@@ -175,20 +175,52 @@ class MainWindow(QMainWindow):
     # 选择文件的方法
     def select_file_path(self):
         file_path, _ = QFileDialog.getOpenFileName(self, "选择文件路径")
-        self.file_path_label.setText(file_path)
-        # 调用主程序的函数，将 file_path 传递给 video_path
-        update_video_path(file_path)
-        run_program()
+
+        if os.path.exists(file_path):
+            self.file_path_label.setText(file_path)
+            # 调用主程序的函数，将 file_path 传递给 video_path
+            update_video_path(file_path)
+            run_program()
+
+            # 设置显示文本内容
+            file_path = "output/face_list.txt"
+            with open(file_path, "r") as file:
+                content = file.read()
+                self.export_textedit.setPlainText(content)
+
+            self.person_list_button.setEnabled(True)
+            self.export_button.setEnabled(True)
+            self.load_images()
+
+        QApplication.processEvents()
 
     # 选择文件夹的方法
     def select_folder_path(self):
-        folder_path, _ = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
-        self.file_path_label.setText(folder_path)
-        process_directory_input()
+        folder_path = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
+
+        if os.path.exists(folder_path):
+            self.file_path_label.setText(folder_path)
+            update_video_path(folder_path)
+            process_directory_input()
+
+            # 设置显示文本内容
+            file_path = "output/face_list.txt"
+            if os.path.exists(file_path):
+                with open(file_path, "r") as file:
+                    content = file.read()
+                    self.export_textedit.setPlainText(content)
+            else:
+                print("文件不存在")
+
+        self.person_list_button.setEnabled(True)
+        self.export_button.setEnabled(True)
+        self.load_images()
+
+        QApplication.processEvents()
 
     # 导出人物与视频文件关联 txt 文件
     def export_files(self):
-        folder_path, _ = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
+        folder_path = QFileDialog.getExistingDirectory(self, "选择文件夹路径")
 
         # 复制出文件
         source_file = "output/face_list.txt"
@@ -196,7 +228,16 @@ class MainWindow(QMainWindow):
         shutil.copy(source_file, destination_folder)
 
 
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    export_folder_path = 'output'
+    # 初始化临时存储文件夹
+    if os.path.exists(export_folder_path):
+        # 删除文件夹及其内容
+        shutil.rmtree(export_folder_path)
+    else:
+        print("文件夹不存在，无需删除。")
+
+    app = QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    sys.exit(app.exec_())

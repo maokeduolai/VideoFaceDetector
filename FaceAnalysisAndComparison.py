@@ -26,28 +26,9 @@ def process_directory_input():
         os.path.join(video_path, '*.wmv'))
 
     # 遍历所有视频文件，并更新处理的视频文件路径
-    if video_path:
-        for video_file in video_files:
-            update_video_path(video_file)
-            run_program()
-
-    def append_to_file(file_path, content):
-        with open(file_path, 'a') as file:
-            file.write(content)
-
-        file_path = "output/face_list.txt"
-
-        try:
-            # 尝试打开文件
-            with open(file_path, "w") as file:
-                print(f"文件 '{file_path}' 创建成功！")
-        except Exception as e:
-            print(f"创建文件 '{file_path}' 失败：{str(e)}")
-
-    # 输出 face_list 数组的内容
-    for item in face_list:
-        # 追加内容到文件
-        append_to_file("output/face_list.txt", item)
+    for video_file in video_files:
+        update_video_path(video_file)
+        run_program()
 
 
 class ProgressBarWindow(QWidget):
@@ -74,8 +55,17 @@ class ProgressBarWindow(QWidget):
 # 创建存储不同人脸特征向量的列表
 face_descriptors = []
 
+# 创建人脸与视频对应列表
+face_list = []
+
+# 人脸连续计数
+unique_face = 1
+
 
 def run_program():
+    global face_list
+    global unique_face
+
     # 获取文件绝对路径，加载模型
     current_dir = os.path.dirname(os.path.abspath(__file__))
     shape_predictor_path = os.path.join(current_dir, "source/model/shape_predictor_68_face_landmarks.dat")
@@ -88,7 +78,6 @@ def run_program():
 
     # 初始化帧计数器与人脸计数器
     frame_count = 0
-    unique_face = 1
 
     # 更改帧率并处理视频文件
     def convert_video(input_file, output_file):
@@ -102,18 +91,19 @@ def run_program():
     # 读取处理后的视频帧数
     probe = ffmpeg.probe(temp_video_path)
     video_info = next(stream for stream in probe['streams'] if stream['codec_type'] == 'video')
-    video_filename = video_info.get('filename')
     GlobalVars.global_total_frame = int(video_info['nb_frames'])
 
+    # 获取视频文件名
+    video_filename = video_path.split("/")[-1]
+
+    # 显示进度条
     progress_window = ProgressBarWindow(GlobalVars.global_total_frame)
     progress_window.show()
 
     # 加载处理后的视频
     cap = cv2.VideoCapture(temp_video_path)
 
-    keep_running = True
-
-    while keep_running:
+    while True:
         print(frame_count)
 
         # 获取锁对象
@@ -124,7 +114,7 @@ def run_program():
         # 读取视频帧
         ret, frame = cap.read()
         if not ret:
-            keep_running = False
+            break
 
         # 检测人脸
         faces = detector(frame)  # 上采样1次，对画面中较小人脸检测更友好，但计算时间也会增加。可调，例如:faces = detector(gray_img, 1)
@@ -152,7 +142,7 @@ def run_program():
                                           shape_points[45][0] - shape_points[36][0])) * 1.0  # 乘1.0转换数据类型为float
             scale = np.sqrt((desired_face_width ** 2 + desired_face_height ** 2) / (
                     (shape_points[45][0] - shape_points[36][0]) ** 2 + (
-                        shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
+                    shape_points[45][1] - shape_points[36][1]) ** 2)) * 0.3
 
             # 构建仿射变换矩阵
             M = cv2.getRotationMatrix2D(eyes_center, angle, scale)
@@ -176,7 +166,7 @@ def run_program():
             w = min(w, frame_width - x)
             h = min(h, frame_height - y)
 
-            # 截取
+            # 截取对齐后的人脸
             aligned_face = aligned_face[y:y + h, x:x + w]
 
             # 将OpenCV默认存储的 BGR 通道顺序转换为 RGB
@@ -186,7 +176,6 @@ def run_program():
             # 较小的 num_jitters 值可以提供较快的计算速度，但可能会降低准确性；而较大的 num_jitters 值可以提供更准确的结果，但计算时间会增加
             face_descriptor = np.array(face_recognizer.compute_face_descriptor(RGB_img, shape, num_jitters=2))
 
-            # 创建保存人脸图像的目录
             output_dir = "output/face"
 
             # 存储第一张人脸的数据，输出人脸图片，然后对比下一张人脸
@@ -194,31 +183,42 @@ def run_program():
                 face_descriptors.append(face_descriptor)
                 output_path = os.path.join(output_dir, f"Person_{unique_face}.png")
                 cv2.imwrite(output_path, aligned_face)
+
+                # 添加人脸 ID 到数组
+                face_list.append(f"Person_{unique_face} -> {video_filename}")
+
+                print(unique_face)
+                print(video_filename)
+
                 unique_face += 1
                 continue
 
-            # 测试是否有相同人脸
+            # 测试是否是相同人脸
             is_unique = True
             for i in range(0, len(face_descriptors)):
                 distance = np.linalg.norm(face_descriptor - face_descriptors[i])
-                print(distance)
+                print(distance)  # 输出欧氏距离，便于调试
+
+                # 欧式距离小于0.6，判断为相同人脸
                 if distance < 0.6:
                     is_unique = False
                     break
 
+            # 对不同的人脸做处理
             if is_unique:
                 # 将人脸特征向量添加到列表中
                 face_descriptors.append(face_descriptor)
                 # 保存帧
                 output_path = os.path.join(output_dir, f"Person_{unique_face}.png")
                 cv2.imwrite(output_path, aligned_face)
+
+                # 添加人脸 ID 到数组
+                face_list.append(f"Person_{unique_face} -> {video_filename}")
+
+                print(unique_face)
+                print(video_filename)
+
                 unique_face += 1
-
-            # 创建一个空的人脸ID数组
-            global face_list
-
-            # 添加人脸ID到数组
-            face_list = [f"Person_{unique_face} -> {video_filename}"]
 
             # 更新进度条
             progress_window.set_value(GlobalVars.global_current_frame)
@@ -228,6 +228,18 @@ def run_program():
 
     # 释放视频文件
     cap.release()
+
+    # 向 txt 文件写入人脸与视频关联
+    file_path = "output/face_list.txt"
+
+    try:
+        # 打开文件并写入内容
+        with open(file_path, "a") as file:
+            for item in face_list:
+                file.write(item + "\n")
+        print(f"文件 '{file_path}' 创建成功并写入内容！")
+    except Exception as e:
+        print(f"创建文件 '{file_path}' 失败：{str(e)}")
 
     print(face_descriptors)
 
